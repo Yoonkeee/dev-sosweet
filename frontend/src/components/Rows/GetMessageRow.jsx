@@ -5,7 +5,7 @@ import { NameProfileImage } from '../NameWithProfileImage';
 const GetMessageRow = ({ count, name, onClick, remainingMinutes }) => {
   const fontColor = remainingMinutes > 0 ? '#1a2a52' : '#ff7f50';
   const countColor = count > 15 ? 'red' : fontColor;
-  const countSize = count > 15 ? '3xl' : 'xl';
+  const countSize = count > 15 ? '2xl' : 'xl';
   const countWeight = count > 15 ? 'black' : 'bold';
 
   return (

@@ -28,7 +28,7 @@ const Header = () => (
       <Text fontSize="xl" px={0} textAlign="center" w="25%">
         쌓인
         <br />
-        업보
+        내역
       </Text>
       <Text fontSize="xl" px={0} textAlign="center" w="25%">
         잔여
