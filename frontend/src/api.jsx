@@ -98,7 +98,7 @@ export const addProfile = (name, fileId) =>
     )
     .then(response => response.status === 200);
 
-export const getProfile = ({ queryKey }) => {
+export const getProfile = queryKey => {
   const [_, name, signal] = queryKey;
   if (name)
     return instance.get(`/get/profile/${name}`, { signal }).then(response => {
@@ -407,8 +407,8 @@ export const notOutTimetable = () => instance.get(`/get/not_out_timetable`).then
 export const testAPI = data => data;
 
 export const getAllergy = ({ queryKey }) => {
-  const [_, name, signal] = queryKey;
-  if (name !== '') return instance.get(`/get/allergy/${name}`, { signal }).then(response => response.data);
+  const [_, name] = queryKey;
+  if (name !== '') return instance.get(`/get/allergy/${name}`).then(response => response.data);
   return null;
 };
 

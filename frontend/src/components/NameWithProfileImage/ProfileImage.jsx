@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Spinner, useDisclosure } from '@chakra-ui/react';
+import { Flex, Image, Spinner, useDisclosure } from '@chakra-ui/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { Suspense, useEffect } from 'react';
 import { Polaroid } from '../../modals/Polaroid';
@@ -12,9 +12,17 @@ export const ProfileImage = ({ name, w }) => (
 );
 
 const ProfileImageSpinner = () => (
-  <Box aspectRatio={1} h="90%" maxH="100px" minH="60px" ml="2%">
-    <Spinner color="#1a2a52" emptyColor="gray.200" h="100%" size="xl" speed="1s" thickness="4px" />
-  </Box>
+  <Flex alignItems="center" aspectRatio={1} h="90%" justifyContent="center" maxH="100px" minH="60px" ml="2%">
+    <Spinner
+      color="#1a2a52"
+      emptyColor="gray.200"
+      h="100%"
+      rounded="full"
+      speed="1s"
+      thickness="4px"
+      w="100%"
+    />
+  </Flex>
 );
 
 const Element = ({ name, w }) => {

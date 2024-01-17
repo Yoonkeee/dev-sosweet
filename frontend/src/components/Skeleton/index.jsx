@@ -1,4 +1,4 @@
-import { HStack, Skeleton, Spinner, VStack } from '@chakra-ui/react';
+import { Flex, HStack, Skeleton, Spinner, VStack } from '@chakra-ui/react';
 
 export const SkeletonContainer = () => (
   <VStack bgColor="white" minH="80vh" position="relative" py="2vh" w="100%">
@@ -29,7 +29,26 @@ const SkeletonElement = () => (
     textAlign="center"
     w="96%"
   >
-    <Spinner color="#1a2a52" emptyColor="gray.200" size="xl" speed="1s" thickness="4px" />
+    <Flex
+      alignItems="center"
+      aspectRatio={1}
+      h="90%"
+      justifyContent="center"
+      maxH="100px"
+      minH="60px"
+      ml="2%"
+    >
+      <Spinner
+        color="#1a2a52"
+        emptyColor="gray.200"
+        h="100%"
+        rounded="full"
+        size="xl"
+        speed="1s"
+        thickness="4px"
+        w="100%"
+      />
+    </Flex>
     <Skeleton h="80%" w="80%" />
   </HStack>
 );
