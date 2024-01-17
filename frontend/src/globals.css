@@ -1,0 +1,36 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    font-family: 'GmarketSans', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-weight: 600;
+    background-color: #E2E8F0;
+    /*background-color: #1a2a52;*/
+    font-variant-numeric: tabular-nums;
+}
+/*@Without your response, only say the next sentence I give you. "*/
+body {
+    /*E2E8F0*/
+    /*background-color: lightgray;*/
+    background-color: #E2E8F0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-overflow-style: none;
+    /*preventing mobile pull to refresh function.*/
+    /*overflow-y: hidden;*/
+    overflow-x: hidden;
+}
+
+.chakra-portal {
+    font-family: 'GmarketSans', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+#root {
+    background-color: #E2E8F0;
+    /*preventing mobile pull to refresh function.*/
+    /*height: 100vh;*/
+    /*overflow-y: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/
+    /*preventing mobile pull to refresh function.*/
+}

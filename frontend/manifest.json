@@ -1,0 +1,16 @@
+{
+  "short_name": "쏘스윗 매니저 데모",
+  "name": "쏘스윗 매니저 데모",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "128x128 64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1a2a52",
+  "background_color": "#1a2a52",
+  "pull_to_refresh": false
+}
