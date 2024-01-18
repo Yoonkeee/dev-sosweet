@@ -25,6 +25,22 @@ export const updateAllergy = (name, allergy) =>
     )
     .then(response => response.status === 200);
 
+// export const homePaddingX = '3.41vw'
+// export const homeBoxBetweenMargin = '2.32vw'
+// export const homeBoxPadding = '3.56vw'
+//
+// function getHomePaddingTop () {
+//   const gap = window.outerHeight - window.innerHeight;
+//   let unitVh = window.innerHeight / 100;
+//   const height = window.innerHeight - gap;
+//   const paddingVh = 1.36
+//   const result = (paddingVh * unitVh * 100) / height;
+//   return result + 'vh';
+// }
+//
+// // export const homeBoxWidth = (45.4 * viewRatio) + 'vw'
+// export const homeGapY = getHomePaddingTop();
+
 export const formatMinuteToTime = minutes => {
   let result = '';
   const hours = Math.floor(Math.abs(minutes / 60));

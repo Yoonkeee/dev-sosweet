@@ -108,8 +108,8 @@ export const History = () => {
       </Flex>
       {data
         ? data.map(item => (
-            <ListElement>
-              <HistoryRow key={item.id} data={item} />
+            <ListElement key={item.id}>
+              <HistoryRow data={item} />
             </ListElement>
           ))
         : null}

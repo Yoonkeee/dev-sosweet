@@ -21,9 +21,13 @@ const HistoryRow = props => {
           {`${in_time}~${out_time}`}
         </Text>
         {/* </VStack> */}
-        <Text fontSize="sm" fontWeight="bold" textAlign="center" textColor="red" w="20%">
-          {belts > 0 ? <Text fontSize="lg">{belts}</Text> : ''}
-        </Text>
+        {belts > 0 ? (
+          <Text fontSize="lg" fontWeight="bold" textAlign="center" textColor="red" w="20%">
+            {belts}
+          </Text>
+        ) : (
+          ''
+        )}
       </HStack>
       {isOpen ? <ModifyHistory {...props.data} isOpen={isOpen} onClose={onClose} /> : null}
     </HStack>

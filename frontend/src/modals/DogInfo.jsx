@@ -184,9 +184,9 @@ const DogInfo = ({ isOpen, name, onClose }) => {
   useEffect(() => {
     if (fileId) {
       addProfile(name, fileId).then(res => {
+        queryClient.refetchQueries({ queryKey: ['dog_info', name] });
+        queryClient.refetchQueries({ queryKey: ['profile', name] });
         if (res) {
-          queryClient.refetchQueries({ queryKey: ['dog_info', name] });
-          queryClient.refetchQueries({ queryKey: ['profile', name] });
           toast({
             title: `${name} 사진 업로드에 성공했어요~~`,
             status: 'success',
@@ -195,8 +195,6 @@ const DogInfo = ({ isOpen, name, onClose }) => {
             isClosable: true,
           });
         } else {
-          queryClient.refetchQueries({ queryKey: ['dog_info', name] });
-          queryClient.refetchQueries({ queryKey: ['profile', name] });
           toast({
             title: `${name} 사진 업로드에 실패했어요ㅜㅜ`,
             status: 'error',

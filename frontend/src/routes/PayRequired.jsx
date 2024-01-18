@@ -47,10 +47,14 @@ export const PayRequired = () => {
       </Header>
       {timeChecked &&
         payTimeRequired &&
-        payTimeRequired.map(item => <PayTimeRequiredRow color={timeColor} onClick={onClick} {...item} />)}
+        payTimeRequired.map(item => (
+          <PayTimeRequiredRow key={item.name} color={timeColor} onClick={onClick} {...item} />
+        ))}
       {beltsChecked &&
         payBeltsRequired &&
-        payBeltsRequired.map(item => <PayBeltsRequiredRow color={beltColor} onClick={onClick} {...item} />)}
+        payBeltsRequired.map(item => (
+          <PayBeltsRequiredRow key={item.name} color={beltColor} onClick={onClick} {...item} />
+        ))}
       {name !== '' && <AddPay initName={name} isOpen={isOpen} onClose={onClose} />}
     </ListContainer>
   );

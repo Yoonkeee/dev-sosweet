@@ -55,7 +55,6 @@ const Checkout = ({ belts, id, in_time, isOpen, name, onClose }) => {
   const date = useRecoilValue(currentDateState);
   const queryClient = useQueryClient();
   const [payToday, setPayToday] = useState(false);
-  const { data, isLoading } = useQuery({ queryKey: ['id-info', id], queryFn: getIdInfo });
   const mutation = useMutation({
     mutationFn: checkOut,
     onSuccess: () => {
@@ -111,7 +110,7 @@ const Checkout = ({ belts, id, in_time, isOpen, name, onClose }) => {
       name,
       in_time,
       out_time: pinNumber,
-      belts: data.belts,
+      belts,
       date,
       minutes: diffMinutes,
       payToday,
@@ -147,11 +146,9 @@ const Checkout = ({ belts, id, in_time, isOpen, name, onClose }) => {
     cancelMutation.mutate(id);
   };
   useEffect(() => {
-    if (data && !isLoading) {
-      reset({
-        belts,
-      });
-    }
+    reset({
+      belts,
+    });
   }, [isOpen]);
 
   return (

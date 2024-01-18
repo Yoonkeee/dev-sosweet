@@ -31,30 +31,13 @@ const ChangeCheckInTime = ({ id, in_or_out, isOpen, name, onClose }) => {
   } = useForm();
   const toast = useToast();
   const date = useRecoilValue(currentDateState);
-  // const date = useSelector(state => state.currentDate);
-  let dogData = {};
+  let dogData = { null: null };
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: changeCheckIn,
     onSuccess: () => {
-      toast({
-        title: (
-          <>
-            체크{in_or_out === 'in' ? '인' : '아웃'} 수정! <br />
-            댕댕이 : {dogData.name} <br />
-            {in_or_out === 'in' ? '입' : '퇴'}장시간 : {dogData.in_time}
-          </>
-        ),
-        status: 'success',
-        position: 'top',
-        duration: 1000,
-        isClosable: true,
-      });
       queryClient.refetchQueries({ queryKey: ['timetable'] });
       queryClient.refetchQueries({ queryKey: ['checkoutTimetable'] });
-      queryClient.refetchQueries({ queryKey: ['timetable', date] });
-      queryClient.refetchQueries({ queryKey: ['checkoutTimetable', date] });
-      // console.log('체크인/아웃 수정 성공');
       onClose();
       reset();
     },
@@ -80,9 +63,20 @@ const ChangeCheckInTime = ({ id, in_or_out, isOpen, name, onClose }) => {
       id,
       in_or_out,
     };
-    // console.log(dogData)
     mutation.mutate(dogData);
-    // console.log('체크인 수정 요청');
+    toast({
+      title: (
+        <>
+          체크{in_or_out === 'in' ? '인' : '아웃'} 수정! <br />
+          댕댕이 : {name} <br />
+          {in_or_out === 'in' ? '입' : '퇴'}장시간 : {dogData.in_time}
+        </>
+      ),
+      status: 'success',
+      position: 'top',
+      duration: 1000,
+      isClosable: true,
+    });
   };
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>

@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Box, VStack } from '@chakra-ui/react';
 import { Suspense, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -8,7 +8,6 @@ import { getHeaderTopPosition, mainColor } from './api';
 import { authenticationAtom } from './store/authentication';
 import { Authentication } from './routes';
 import { SkeletonContainer } from './components/Skeleton';
-import { NoticeDemo } from './modals/NoticeDemo';
 
 // const getMobileSafeAreaMargin = () => {
 //   try {
@@ -47,11 +46,11 @@ export const Root = () => {
   //   dispatch(setStatusBarHeight('0px'));
   // }
   // const statusBarHeight = useSelector(state => state.statusBarHeight);
-  const location = window.location.pathname;
+  // const location = window.location.pathname;
   // const location = useLocation().pathname;
   window.pulltorefresh = true;
-  const pathname = location;
-  // const { pathname } = useLocation();
+  // const pathname = location;
+  const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -101,7 +100,7 @@ export const Root = () => {
     // 로딩 요소의 높이가 MAX_HEIGHT 보다 크다면
     if (loading.current && loadingHeight.current >= MAX_HEIGHT) {
       document.documentElement.style.backgroundColor = mainColor;
-      console.log(loadingHeight.current);
+      // console.log(loadingHeight.current);
       // 새로고침 함수를 실행한다.
       handleRefresh.current();
       // div.current.removeChild(loading.current); // 로딩 요소를 제거
@@ -135,7 +134,6 @@ export const Root = () => {
           'GmarketSans, Pretendard, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol',
       }}
     >
-      <NoticeDemo />
       {isAuthorized ? (
         <>
           <Header />

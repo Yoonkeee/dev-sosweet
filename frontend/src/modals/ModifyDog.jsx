@@ -31,6 +31,7 @@ import {
   uploadImage,
 } from '../api';
 import { ProfileImage } from '../components/NameWithProfileImage';
+import { DogFace } from '../components/CustomIcons/DogFace';
 
 const ModifyDog = ({ isOpen, onClose }) => {
   // const {isOpen, onOpen, onClose} = useDisclosure()
@@ -48,6 +49,13 @@ const ModifyDog = ({ isOpen, onClose }) => {
   const [lastVisited, setLastVisited] = useState('');
   const [visitColor, setVisitColor] = useState('telegram');
   const [timeColor, setTimeColor] = useState('green');
+  const [file, setFile] = useState(null);
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
+  const [uploadURL, setuploadURL] = useState('');
+  const [isUploaded, setIsUploaded] = useState(true);
+  const [remainingTime, setRemainingTime] = useState('');
+  const [fileId, setFileId] = useState('');
+  const imageRef = useRef(null);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: modDog,
@@ -78,7 +86,7 @@ const ModifyDog = ({ isOpen, onClose }) => {
     // console.log(res);
     mutation.mutate(res);
   };
-  const [remainingTime, setRemainingTime] = useState('');
+
   useEffect(() => {
     if (data && !isLoading) {
       reset({
@@ -109,6 +117,7 @@ const ModifyDog = ({ isOpen, onClose }) => {
       }
     }
   }, [data]);
+
   const onReset = () => {
     reset({
       officialName: '',
@@ -126,13 +135,14 @@ const ModifyDog = ({ isOpen, onClose }) => {
     setLastVisited('');
     setBeltColor('green');
     setFile(null);
-    setProfileUrl('');
     setIsUploaded(true);
   };
+
   const onCloseFn = () => {
     onClose();
     onReset();
   };
+
   const onNameChange = e => {
     // console.log(e);
     if (e.target.value === '') {
@@ -142,18 +152,14 @@ const ModifyDog = ({ isOpen, onClose }) => {
       setName(prev => e.target.value);
     }
   };
-  const [file, setFile] = useState(null);
-  const imageRef = useRef(null);
+
   const onUploadImageButtonClick = () => {
     if (!imageRef.current) {
       return;
     }
     imageRef.current.click();
   };
-  useEffect(() => {
-    if (file) setIsFileUploaded(true);
-    else setIsFileUploaded(false);
-  }, [file]);
+
   const onFileChange = e => {
     const {
       target: { files },
@@ -161,21 +167,6 @@ const ModifyDog = ({ isOpen, onClose }) => {
     const theFile = files[0];
     setFile(theFile);
   };
-  const { isLoading: isProfileLoading, data: profileData } = useQuery({
-    queryKey: ['profile', name],
-    queryFn: getProfile,
-  });
-  const [isFileUploaded, setIsFileUploaded] = useState(false);
-  const [uploadURL, setuploadURL] = useState('');
-  const [isUploaded, setIsUploaded] = useState(true);
-  const [profileUrl, setProfileUrl] = useState('');
-  useEffect(() => {
-    if (profileData) {
-      setProfileUrl(profileData);
-    } else {
-      setProfileUrl('');
-    }
-  }, [profileData]);
 
   const onUploadServerButtonClick = () => {
     if (file == null) return;
@@ -184,7 +175,6 @@ const ModifyDog = ({ isOpen, onClose }) => {
       setuploadURL(res.uploadURL);
     });
   };
-  const [fileId, setFileId] = useState('');
 
   useEffect(() => {
     if (uploadURL === '') return;
@@ -194,11 +184,16 @@ const ModifyDog = ({ isOpen, onClose }) => {
   }, [uploadURL]);
 
   useEffect(() => {
+    if (file) setIsFileUploaded(true);
+    else setIsFileUploaded(false);
+  }, [file]);
+
+  useEffect(() => {
     if (fileId) {
       addProfile(name, fileId).then(res => {
+        queryClient.refetchQueries({ queryKey: ['dog_info', name] });
+        queryClient.refetchQueries({ queryKey: ['profile', name] });
         if (res) {
-          queryClient.refetchQueries({ queryKey: ['dog_info', name] });
-          queryClient.refetchQueries({ queryKey: ['profile', name] });
           toast({
             title: `${name} 사진 업로드에 성공했어요~~`,
             status: 'success',
@@ -207,8 +202,6 @@ const ModifyDog = ({ isOpen, onClose }) => {
             isClosable: true,
           });
         } else {
-          queryClient.refetchQueries({ queryKey: ['dog_info', name] });
-          queryClient.refetchQueries({ queryKey: ['profile', name] });
           toast({
             title: `${name} 사진 업로드에 실패했어요ㅜㅜ`,
             status: 'error',
@@ -236,7 +229,11 @@ const ModifyDog = ({ isOpen, onClose }) => {
             ) : (
               <HStack w="100%">
                 <Box textAlign="left" w="25%">
-                  <ProfileImage name={name} />
+                  {name ? (
+                    <ProfileImage name={name} />
+                  ) : (
+                    <DogFace boxSize={16} h="90%" maxH="100px" minH="60px" />
+                  )}
                 </Box>
                 <Select
                   css={{ WebkitPaddingEnd: 0, WebkitPaddingStart: 10 }}

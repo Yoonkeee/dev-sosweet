@@ -179,6 +179,7 @@ class Interface:
             data['hasAllergy'] = 1
         else:
             data['hasAllergy'] = 0
+            data['allergy'] = ''
 
         insert_query = f"""
         INSERT INTO dogs (name, breed, note, gender, phone, weight, official_name, hasAllergy, allergy)
@@ -274,6 +275,7 @@ class Interface:
             data['hasAllergy'] = 1
         else:
             data['hasAllergy'] = 0
+            data['allergy'] = ''
 
         update_query = f"""
         UPDATE dogs
@@ -502,6 +504,7 @@ class Interface:
         update timetable
         set out_time = '{date + ' ' + out_time}'
         , belts = {belts}
+        , paid_today = {1  if check_today else 0}
         where id = {row_id};
         """
         # print(update_query)
@@ -889,6 +892,16 @@ class Interface:
         # print(insert_query)
         self.setter.execute(insert_query)
         self.db.commit()
+
+        time_table_query = f"""
+        update timetable
+        set paid_today = 1
+        where id = {row_id};
+        """
+        # print(time_table_query)
+        self.setter.execute(time_table_query)
+        self.db.commit()
+
         return True
 
     def get_pay_belts_required(self):

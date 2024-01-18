@@ -48,12 +48,11 @@ function minutesToHHMM(minutes) {
 const ModifyHistory = ({ belts, date: propDate, id, in_time, isOpen, name, onClose, out_time }) => {
   const ref = useRef(null);
   const [tobeDate, setTobeDate] = useState(dateStrToTemporal(propDate));
-  const [originDate, setOriginDate] = useState(dateStrToTemporal(propDate));
   const [formattedDate, setFormattedDate] = useState();
   useEffect(() => {
     setFormattedDate(tobeDate.toLocaleString('ko-KR', { month: 'long', day: 'numeric', weekday: 'long' }));
   }, [tobeDate]);
-  let checkoutData = {};
+  let checkoutData = { status: new Date() };
   const defaultInTime = in_time.replace(':', '');
   const defaultOutTime = out_time.replace(':', '');
   let inPinNumber = defaultInTime.split('');
@@ -67,32 +66,33 @@ const ModifyHistory = ({ belts, date: propDate, id, in_time, isOpen, name, onClo
   });
   const toast = useToast();
   const queryClient = useQueryClient();
+  const toastOnSuccess = data => {
+    toast({
+      title: (
+        <>
+          사용내역 수정! <br />
+          댕댕이 : {data.name} <br />
+          사용날짜 : {formattedDate} <br />
+          입장시간 : {data.in_time} <br />
+          퇴장시간 : {data.out_time} <br />
+          이용시간 : {minutesToHHMM(data.minutes)} <br />
+          매너벨트 : {data.belts}개 <br />
+        </>
+      ),
+      status: 'success',
+      position: 'top',
+      duration: 1500,
+      isClosable: true,
+    });
+  };
   const mutation = useMutation({
     mutationFn: modHistory,
     onSuccess: () => {
-      toast({
-        title: (
-          <>
-            사용내역 수정! <br />
-            댕댕이 : {checkoutData.name} <br />
-            사용날짜 : {formattedDate} <br />
-            입장시간 : {checkoutData.in_time} <br />
-            퇴장시간 : {checkoutData.out_time} <br />
-            이용시간 : {minutesToHHMM(checkoutData.minutes)} <br />
-            매너벨트 : {checkoutData.belts}개 <br />
-          </>
-        ),
-        status: 'success',
-        position: 'top',
-        duration: 1500,
-        isClosable: true,
-      });
       onClose();
       reset();
-      queryClient.refetchQueries({ queryKey: ['timetable', originDate] });
-      queryClient.refetchQueries({ queryKey: ['checkoutTimetable', originDate] });
+      queryClient.refetchQueries({ queryKey: ['timetable'] });
+      queryClient.refetchQueries({ queryKey: ['checkoutTimetable'] });
       queryClient.refetchQueries({ queryKey: ['history'] });
-      queryClient.refetchQueries({ queryKey: ['history', name] });
     },
   });
   const onSubmit = data => {
@@ -132,6 +132,7 @@ const ModifyHistory = ({ belts, date: propDate, id, in_time, isOpen, name, onClo
       check_today: false,
     };
     mutation.mutate(checkoutData);
+    toastOnSuccess(checkoutData);
   };
   const cancelMutation = useMutation({
     mutationFn: cancelHistory,
@@ -141,7 +142,7 @@ const ModifyHistory = ({ belts, date: propDate, id, in_time, isOpen, name, onClo
           <>
             사용내역 삭제! <br />
             댕댕이 : {name} <br />
-            사용날짜 : {document.getElementById('formattedNowDate').innerText} <br />
+            사용날짜 : {formattedDate} <br />
           </>
         ),
         status: 'success',
@@ -151,9 +152,9 @@ const ModifyHistory = ({ belts, date: propDate, id, in_time, isOpen, name, onClo
       });
       onClose();
       reset();
-      queryClient.refetchQueries({ queryKey: ['history', name] });
-      queryClient.refetchQueries({ queryKey: ['timetable', originDate] });
-      queryClient.refetchQueries({ queryKey: ['checkoutTimetable', originDate] });
+      queryClient.refetchQueries({ queryKey: ['history'] });
+      queryClient.refetchQueries({ queryKey: ['timetable'] });
+      queryClient.refetchQueries({ queryKey: ['checkoutTimetable'] });
     },
   });
   const cancel = () => {
@@ -178,6 +179,7 @@ const ModifyHistory = ({ belts, date: propDate, id, in_time, isOpen, name, onClo
         isClosable: true,
       });
     }
+    queryClient.refetchQueries({ queryKey: ['checkoutTimetable'] });
   };
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>

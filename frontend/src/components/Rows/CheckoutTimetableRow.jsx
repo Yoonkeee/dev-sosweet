@@ -31,6 +31,7 @@ const CheckoutTimetableRow = ({
   in_time,
   name,
   out_time,
+  paid_today: paidToday,
   remaining_minutes: remainingMinutes,
 }) => {
   const [belts, setBelts] = useState(usedBelts);
@@ -135,64 +136,66 @@ const CheckoutTimetableRow = ({
           textAlign="center"
           w="calc(min(1rem + 8vw, 3.5rem))"
         >
-          <Avatar
-            bgColor="transparent"
-            icon={
-              <Popover isOpen={deleteIsOpen} onClose={deleteOnClose} placement="left">
-                <PopoverTrigger>
-                  <Button
-                    _hover={{
-                      textDecoration: 'none',
-                      color: 'white',
-                      transform: 'scale(1.2)',
-                    }}
-                    color="#f8f8f8"
-                    colorScheme="yellow"
-                    fontSize="md"
-                    h="3.5vh"
-                    onClick={deleteOnOpen}
-                    position="inherit"
-                    rounded="7.5px"
-                    size="sm"
-                    w="100%"
-                  >
-                    삭제
-                  </Button>
-                </PopoverTrigger>
-                <Portal>
-                  <PopoverContent bg="gray.200" w="100%">
-                    <PopoverArrow />
-                    <PopoverCloseButton />
-                    <PopoverBody textAlign="center">
-                      <Heading fontSize="2xl" my="3vh">
-                        내역을 삭제할까요?
-                      </Heading>
-                      <Button
-                        colorScheme="yellow"
-                        onClick={() => {
-                          cancel();
-                          deleteOnClose();
-                        }}
-                      >
-                        삭제할게요!
-                      </Button>
-                    </PopoverBody>
-                  </PopoverContent>
-                </Portal>
-              </Popover>
-            }
-            w="100%"
-          >
-            {belts > 0 ? (
-              <AvatarBadge bg="orange.500" boxSize="1.5em" fontSize="xl">
-                <Text fontSize="0.8em" fontWeight="black">
-                  {belts}
-                </Text>
-              </AvatarBadge>
-            ) : (
-              ''
-            )}
-          </Avatar>
+          {paidToday ? (
+            <PaidOnCheckoutDay />
+          ) : (
+            <Avatar
+              bgColor="transparent"
+              icon={
+                <Popover isOpen={deleteIsOpen} onClose={deleteOnClose} placement="left">
+                  <PopoverTrigger>
+                    <Button
+                      _hover={{
+                        textDecoration: 'none',
+                        color: 'white',
+                        transform: 'scale(1.2)',
+                      }}
+                      color="#f8f8f8"
+                      colorScheme="yellow"
+                      fontSize="md"
+                      h="3.5vh"
+                      onClick={deleteOnOpen}
+                      position="inherit"
+                      rounded="7.5px"
+                      size="sm"
+                      w="100%"
+                    >
+                      삭제
+                    </Button>
+                  </PopoverTrigger>
+                  <Portal>
+                    <PopoverContent bg="gray.200" w="100%">
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverBody textAlign="center">
+                        <Heading fontSize="2xl" my="3vh">
+                          내역을 삭제할까요?
+                        </Heading>
+                        <Button
+                          colorScheme="yellow"
+                          onClick={() => {
+                            cancel();
+                            deleteOnClose();
+                          }}
+                        >
+                          삭제할게요!
+                        </Button>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Portal>
+                </Popover>
+              }
+              w="100%"
+            >
+              {belts > 0 ? (
+                <AvatarBadge bg="orange.500" boxSize="1.5em" fontSize="xl">
+                  <Text fontSize="0.8em" fontWeight="black">
+                    {belts}
+                  </Text>
+                </AvatarBadge>
+              ) : null}
+            </Avatar>
+          )}
         </Flex>
       </HStack>
       {dogInfoModISOpen ? (
@@ -215,5 +218,27 @@ const CheckoutTimetableRow = ({
     </HStack>
   );
 };
+
+const PaidOnCheckoutDay = () => (
+  <Button
+    _hover={{
+      textDecoration: 'none',
+      color: 'white',
+      transform: 'scale(1.2)',
+    }}
+    color="#f8f8f8"
+    colorScheme="telegram"
+    fontSize="md"
+    h="5vh"
+    position="inherit"
+    rounded="7.5px"
+    size="sm"
+    w="100%"
+  >
+    당일
+    <br />
+    결제
+  </Button>
+);
 
 export default CheckoutTimetableRow;

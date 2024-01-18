@@ -63,7 +63,7 @@ export const Authentication = () => {
   }, [wrongStack]);
 
   const lockAuthentication = () => {
-    const enableTime = new Date(Date.now() + 1000 * 5 + 500);
+    const enableTime = new Date(Date.now() + 1000 * 60 * 3 + 500);
     const remaining = () => getDateDistance(new Date(), enableTime);
     setRemainingTime(getDateDistanceText(remaining()));
     setFailure({ status: true, enableOn: enableTime });
@@ -105,7 +105,7 @@ export const Authentication = () => {
     clearTimeout(timeoutId);
     try {
       const pinNumber = pin.join('');
-      if (pinNumber === '0000') authorized();
+      if (pinNumber === '4315') authorized();
       else wrongPin();
     } catch {
       wrongPin();
@@ -140,7 +140,7 @@ export const Authentication = () => {
       {failure.status ? (
         <Locked remainingTime={remainingTime} />
       ) : (
-        <>
+        <VStack w={'100%'} h={'70vh'} justifyContent={'flex-start'}>
           <Flex h="10vh" w="50%">
             <PasswordInput pinLength={pin.length} />
           </Flex>
@@ -158,7 +158,7 @@ export const Authentication = () => {
           <Flex w="60%">
             <NumberPad onInput={onInput} onDelete={onDelete} />
           </Flex>
-        </>
+        </VStack>
       )}
     </VStack>
   );
@@ -173,7 +173,7 @@ const Locked = ({ remainingTime }) => {
       fontFamily="GmarketSans"
       textAlign="center"
       fontSize="xl"
-      h={'4vh'}
+      h={'10vh'}
       fontWeight={500}
       mb="2vh"
       py="4vh"

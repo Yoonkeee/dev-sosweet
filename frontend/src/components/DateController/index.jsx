@@ -36,7 +36,6 @@ export const DateController = ({ date, onNext, onPrev }) => {
         bg="#1a2a52"
         color="white"
         h="80%"
-        isRound
         onClick={() => onPrev()}
         position="inherit"
         rounded="xl"
@@ -62,7 +61,6 @@ export const DateController = ({ date, onNext, onPrev }) => {
         bg="#1a2a52"
         color="white"
         h="80%"
-        isRound
         onClick={() => onNext()}
         position="inherit"
         rounded="xl"

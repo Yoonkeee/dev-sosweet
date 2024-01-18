@@ -1,38 +1,15 @@
-import { Box, VStack } from '@chakra-ui/react';
-import { Temporal } from '@js-temporal/polyfill';
+import { Button, Text, VStack } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 export const Hotelling = () => (
-  // const createEvent = scheduleData => {
-  //   console.log(scheduleData);
-  // };
-  // const events = [{ title: 'Meeting', start: Temporal.Now.plainDateISO('Asia/Seoul').toString() }];
-  // const handleDateClick = arg => {
-  //   // bind with an arrow function
-  //   alert(arg.dateStr);
-  // };
-  // console.log(Temporal.Now.plainDateISO('Asia/Seoul').toString());
   <VStack bg="gray.100" minH="100vh" w="100%">
-    <Box w="100%">
+    <Text fontSize="xl" mb="5vh" mt="20vh" textAlign="center" w="100%">
       호텔링 서비스는 아직 준비중입니다.
-      {/* <FullCalendar */}
-      {/*  // headerToolbar={null} */}
-      {/*  dateClick={handleDateClick} */}
-      {/*  editable */}
-      {/*  eventContent={renderEventContent} */}
-      {/*  events={events} */}
-      {/*  initialView="dayGridMonth" */}
-      {/*  locale="ko" */}
-      {/*  plugins={[dayGridPlugin, interactionPlugin]} */}
-      {/* /> */}
-    </Box>
+    </Text>
+    <Link to="/">
+      <Button colorScheme="twitter" variant="solid">
+        &larr; 돌아가주세요...😢
+      </Button>
+    </Link>
   </VStack>
 );
-
-// function renderEventContent(eventInfo) {
-//   return (
-//     <>
-//       <b>{eventInfo.timeText}</b>
-//       <i>{eventInfo.event.title}</i>
-//     </>
-//   );
-// }
