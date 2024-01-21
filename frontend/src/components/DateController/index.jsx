@@ -17,7 +17,7 @@ export const DateController = ({ date, onNext, onPrev, onRefresh = null }) => {
     const containerWidth = containerRef.current.getBoundingClientRect().width;
     const elementWidth = elementRef.current.getBoundingClientRect().width;
 
-    if (displayDay && elementWidth / containerWidth >= 0.57) {
+    if (displayDay && elementWidth / containerWidth >= 0.6) {
       setDisplayDay(false);
       setThreshold(window.innerWidth);
     }
@@ -33,71 +33,66 @@ export const DateController = ({ date, onNext, onPrev, onRefresh = null }) => {
 
   return (
     <HStack h="6vh" justifyContent="space-between" px="4%" py="0.5vh" w="100%">
-      {onRefresh ? <Box aspectRatio={1} h="100%" /> : null}
-      <HStack ref={containerRef} h="100%" justifyContent="center" w="100%">
-        <ArrowBackward
-          _hover={{
-            textDecoration: 'none',
-            color: 'white',
-            bg: '#526491',
-            rounded: 'xl',
-            transform: 'scale(1.2)',
-          }}
-          bg="#1a2a52"
-          color="white"
-          h="80%"
-          minW="50px"
-          onClick={() => onPrev()}
-          position="inherit"
-          rounded="xl"
-          transitionDuration="0.2s"
-          w="10%"
-        />
+      <Dummy exist={!!onRefresh} />
+      <HStack ref={containerRef} h="100%" justifyContent="center" maxW="70%">
+        <ArrowButton onPrev={onPrev} />
         <DateWithDay date={date} displayDay={displayDay} elementRef={elementRef} />
-        <ArrowForward
-          _hover={{
-            textDecoration: 'none',
-            color: 'white',
-            bg: '#526491',
-            rounded: 'xl',
-            transform: 'scale(1.2)',
-          }}
-          bg="#1a2a52"
-          color="white"
-          h="80%"
-          minW="50px"
-          onClick={() => onNext()}
-          position="inherit"
-          rounded="xl"
-          transitionDuration="0.2s"
-          w="10%"
-        />
+        <ArrowButton onNext={onNext} />
       </HStack>
-      {onRefresh ? (
-        <Flex aspectRatio={1} h="80%">
-          <Refresh
-            _hover={{
-              textDecoration: 'none',
-              color: 'white',
-              bg: '#2cd65d',
-              rounded: 'xl',
-              transform: 'scale(1.1)',
-            }}
-            bg="#19d050"
-            color="white"
-            h="100%"
-            onClick={() => onRefresh()}
-            py="6px"
-            rounded="xl"
-            transitionDuration="0.2s"
-            w="100%"
-            // w="10%"
-          />
-        </Flex>
-      ) : null}
+      <RefreshButton onRefresh={onRefresh} />
     </HStack>
   );
 };
+
+const Dummy = exist => (exist ? <Box aspectRatio={1} h="100%" /> : null);
+
+const ArrowButton = ({ onNext = null, onPrev = null }) => {
+  const Button = onNext ? ArrowForward : ArrowBackward;
+  const onClick = onNext || onPrev;
+  return (
+    <Button
+      _hover={{
+        textDecoration: 'none',
+        color: 'white',
+        bg: '#526491',
+        rounded: 'xl',
+        transform: 'scale(1.2)',
+      }}
+      bg="#1a2a52"
+      color="white"
+      h="80%"
+      minW="50px"
+      onClick={onClick}
+      position="inherit"
+      rounded="xl"
+      transitionDuration="0.2s"
+      w="10%"
+    />
+  );
+};
+
+const RefreshButton = ({ onRefresh }) =>
+  onRefresh ? (
+    <Flex aspectRatio={1} h="80%">
+      <Refresh
+        _hover={{
+          textDecoration: 'none',
+          color: 'white',
+          bg: '#2cd65d',
+          rounded: 'xl',
+          transform: 'scale(1.1)',
+        }}
+        bg="#19d050"
+        color="white"
+        h="100%"
+        onClick={() => onRefresh()}
+        py="6px"
+        rounded="xl"
+        transitionDuration="0.2s"
+        w="100%"
+      />
+    </Flex>
+  ) : null;
 
 const DateWithDay = ({ date, displayDay, elementRef }) => {
   const formattedMonthDate = Temporal.PlainDate.from(date).toLocaleString('ko-KR', {

@@ -9,7 +9,7 @@ from pathlib import Path
 import os
 from starlette.responses import FileResponse
 
-import db_interface
+import db_interface as DB
 from pydantic import BaseModel
 from typing import Optional
 import json
@@ -27,7 +27,7 @@ env = dotenv_values(".env")
 
 logger = logging.getLogger(__name__)
 
-db_interface = db_interface.Interface()
+db_interface = DB.Interface()
 
 # python = "^3.11"
 # fastapi = "*"
@@ -507,8 +507,6 @@ async def get_pay_time_required():
     return result
 
 
-
-
 # @app.get("/api/post/add-new-dog/")
 # async def add_new_dog():
 #     return {"message": "/api/post/add-new_dog/"}
@@ -519,3 +517,19 @@ async def get_pay_time_required():
 # @app.get('/api/get/list/all/')
 # async def get_list_all():
 #     return {"message": "/api/post/add-new_dog/"}
+
+
+def remove_db_interface():
+    global db_interface
+    db_interface = None
+
+    return True
+
+
+@app.get("/api/get/restart-db-connection")
+async def reinitialize_db():
+    global db_interface
+    if remove_db_interface():
+        db_interface = DB.Interface()
+
+    return True

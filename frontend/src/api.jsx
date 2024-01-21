@@ -458,3 +458,5 @@ export const useIsNarrow = () => {
 
   return isNarrow;
 };
+
+export const restartDBConnection = () => instance.get(`/get/restart-db-connection`);
