@@ -25,14 +25,14 @@ import 프로6 from '../../public/logo/프로6.png';
 export const Home = () => (
   <VStack bgColor="gray.200" minH="80vh" paddingTop="2.5vh" pb={0} pt="2vh" px="2%" w="100%">
     {/*  ROW 1  */}
-    <HStack alignContent="center" alignItems="center" justifyContent="space-evenly" px="2%" w="100%">
+    <HStack alignContent="center" alignItems="center" justifyContent="center" px="2%" w="100%">
       {/*  LEFT  */}
       <HomeSquareBox image={박프로} letterColor="#752D2A" link="/hotelling" title="호텔링" />
       {/*  RIGHT  */}
       <HomeSquareBox image={박하로} letterColor="#ffffff" link="/timetable" title="놀이방" />
     </HStack>
     {/*  ROW 2  */}
-    <HStack alignContent="center" alignItems="center" justifyContent="space-evenly" px="2%" w="100%">
+    <HStack alignContent="center" alignItems="center" justifyContent="center" px="2%" w="100%">
       {/*  LEFT  */}
       <HomeSquareBox
         bgColor="#FEBE8C"
@@ -45,7 +45,7 @@ export const Home = () => (
       <HomeSquareBox bgColor="#95BDFF" image={프로3} letterColor="white" link="/get-message" title="메세지" />
     </HStack>
     {/*  ROW 3  */}
-    <HStack alignContent="center" alignItems="center" justifyContent="space-evenly" px="2%" w="100%">
+    <HStack alignContent="center" alignItems="center" justifyContent="center" px="2%" w="100%">
       {/*  LEFT  */}
       <HomeRectBoxTwoByOne
         bgColor="#DFFFD8"
@@ -64,7 +64,7 @@ export const Home = () => (
       />
     </HStack>
     {/*  ROW 4  */}
-    <HStack alignContent="center" alignItems="center" justifyContent="space-evenly" px="2%" w="100%">
+    <HStack alignContent="center" alignItems="center" justifyContent="center" px="2%" w="100%">
       {/*  LEFT  */}
       <HomeRectBoxTwoByOneModal
         bgColor="#FFF6BD"
@@ -86,7 +86,7 @@ export const Home = () => (
 );
 
 const HomeSquareBox = props => (
-  <AspectRatio border={`2px solid ${mainColor}`} ratio={1} rounded="1rem" w="50%">
+  <AspectRatio border={`2px solid ${mainColor}`} maxW="250px" ratio={1} rounded="1rem" w="50%">
     <Link h="100%" to={props.link} w="100%">
       <Box bgColor={props.bgColor} boxSizing="border-box" dropShadow="lg" h="100%" rounded="0.9rem" w="100%">
         <Image rounded="0.9rem" src={props.image} />
@@ -107,7 +107,7 @@ const HomeSquareBox = props => (
 );
 
 const HomeRectBoxTwoByOne = props => (
-  <AspectRatio border={`2px solid ${mainColor}`} ratio={2} rounded="1rem" w="50%">
+  <AspectRatio border={`2px solid ${mainColor}`} maxW="250px" ratio={2} rounded="1rem" w="50%">
     <Link h="100%" to={props.link} w="100%">
       <Box bgColor={props.bgColor} h="100%" rounded="0.9rem" w="100%">
         <Image rounded="0.9rem" src={props.image} />
@@ -130,7 +130,7 @@ const HomeRectBoxTwoByOne = props => (
 const HomeRectBoxTwoByOneModal = props => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   return (
-    <AspectRatio border={`2px solid ${mainColor}`} ratio={2} rounded="1rem" w="50%">
+    <AspectRatio border={`2px solid ${mainColor}`} maxW="250px" ratio={2} rounded="1rem" w="50%">
       <Button h="100%" m={0} onClick={onOpen} p={0} rounded="0.9rem" w="100%">
         <Box bgColor={props.bgColor} h="100%" w="100%">
           <Image rounded="0.9rem" src={props.image} w="100%" />

@@ -1,5 +1,5 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { Box, Flex, HStack, Image, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, HStack, Image, Text, useMediaQuery, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import {
   authenticationAtom,
@@ -12,7 +12,6 @@ import LogoWord from '../../public/logo/logo_word.png';
 import { NumberPad } from '../components/NumberPad';
 import { PasswordInput } from '../components/PasswordInput';
 import { getDateDistance, getDateDistanceText } from '@toss/date';
-import { getHeaderTopPosition } from '../api';
 
 export const Authentication = () => {
   const setAuthorized = useSetRecoilState(authenticationAtom);
@@ -24,6 +23,7 @@ export const Authentication = () => {
   const [color, setColor] = useState('white');
   const [timeoutId, setTimeoutId] = useState(0);
   const [remainingTime, setRemainingTime] = useState('initialized');
+  const [isLogoVisible] = useMediaQuery('(min-height: 800px)');
 
   const resetAuthFailureAtom = () => setFailure({ status: false, enableOn: null });
   const resetWrongStackAtom = () => setWrongStack(0);
@@ -105,7 +105,7 @@ export const Authentication = () => {
     clearTimeout(timeoutId);
     try {
       const pinNumber = pin.join('');
-      if (pinNumber === '4315') authorized();
+      if (pinNumber === '0000') authorized();
       else wrongPin();
     } catch {
       wrongPin();
@@ -125,23 +125,25 @@ export const Authentication = () => {
   }, [pin]);
 
   return (
-    <VStack
-      alignContent="center"
-      bgColor="#1a2a52"
-      minH="100vh"
-      pt={getHeaderTopPosition()}
-      h={'100%'}
-      w="100%"
-    >
-      <VStack h={'22vh'}>
-        <Image filter="invert(1)" src={LogoDog} w="30%" />
-        <Image filter="invert(1)" src={LogoWord} w="40%" />
-      </VStack>
+    <VStack alignContent="center" bgColor="#1a2a52" h="100vh" minH="100vh" pt={'5vh'} w="100%">
+      <HStack h={'16%'} gap={0}>
+        {isLogoVisible ? (
+          <>
+            <Image filter="invert(1)" src={LogoDog} h={'80%'} />
+            <Image filter="invert(1)" src={LogoWord} h={'50%'} />
+          </>
+        ) : null}
+      </HStack>
       {failure.status ? (
         <Locked remainingTime={remainingTime} />
       ) : (
-        <VStack w={'100%'} h={'70vh'} justifyContent={'flex-start'}>
-          <Flex h="10vh" w="50%">
+        <VStack
+          w={'100%'}
+          h={isLogoVisible ? '80%' : '100%'}
+          mb={isLogoVisible ? null : '2vh'}
+          justifyContent={'flex-start'}
+        >
+          <Flex h="15%" w="50%">
             <PasswordInput pinLength={pin.length} />
           </Flex>
           <Text
@@ -149,15 +151,15 @@ export const Authentication = () => {
             fontFamily="GmarketSans"
             textAlign="center"
             fontSize="xl"
-            h={'4vh'}
+            h={'5%'}
             fontWeight={500}
             mb="2vh"
           >
             {text}
           </Text>
-          <Flex w="60%">
+          <VStack w="80%" h={'80%'} gap={0}>
             <NumberPad onInput={onInput} onDelete={onDelete} />
-          </Flex>
+          </VStack>
         </VStack>
       )}
     </VStack>

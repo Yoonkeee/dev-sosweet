@@ -227,65 +227,64 @@ const DogInfo = ({ isOpen, name, onClose }) => {
         <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
           <VStack w="100%">
             <HStack w="100%">
-              <Text minW="25%">공식 이름</Text>
+              <Text w="25%">공식 이름</Text>
               <Input
                 placeholder="공식 이름 미입력시 이름과 동일(선택)"
                 variant="filled"
+                w="75%"
                 {...register('officialName')}
               />
             </HStack>
             <HStack w="100%">
-              <Text minW="25%">알러지</Text>
-              <Input placeholder="알러지(선택)" variant="filled" {...register('allergy')} />
+              <Text w="25%">알러지</Text>
+              <Input placeholder="알러지(선택)" variant="filled" w="75%" {...register('allergy')} />
             </HStack>
             <HStack w="100%">
-              <Text minW="25%">특이사항</Text>
-              <Input placeholder="특이사항(선택)" variant="filled" {...register('dogInfo')} />
+              <Text w="25%">특이사항</Text>
+              <Input placeholder="특이사항(선택)" variant="filled" w="75%" {...register('dogInfo')} />
             </HStack>
             <HStack w="100%">
-              <Text minW="25%">견종&성별</Text>
-              <Input mr={1} placeholder="견종(선택)" variant="filled" {...register('dogBreed')} />
-              <Input ml={1} placeholder="성별(선택)" variant="filled" {...register('dogGender')} />
+              <Text w="25%">견종&성별</Text>
+              <HStack w="75%">
+                <Input placeholder="견종(선택)" variant="filled" w="75%" {...register('dogBreed')} />
+                <Input placeholder="성별(선택)" variant="filled" w="25%" {...register('dogGender')} />
+              </HStack>
             </HStack>
             <HStack w="100%">
-              <Text minW="25%">
+              <Text w="25%">
                 전화번호&
                 <br />
-                매벨 사용량
+                벨트 사용량
               </Text>
-              <Input
-                mr={1}
-                placeholder="견주 전화번호(선택)"
-                variant="filled"
-                w="55%"
-                {...register('phone')}
-              />
-              <Badge colorScheme={beltColor} fontSize="xl" ml="1">
-                {usedBelts}
-              </Badge>
+              <HStack w="75%">
+                <Input placeholder="견주 전화번호(선택)" variant="filled" w="75%" {...register('phone')} />
+                <Badge colorScheme={beltColor} display="flex" fontSize="xl" justifyContent="center" w="25%">
+                  {usedBelts}
+                </Badge>
+              </HStack>
             </HStack>
             <HStack w="100%">
-              <Text minW="25%">
+              <Text w="25%">
                 몸무게&
                 <br />
                 잔여시간
               </Text>
-              <Input
-                ml={1}
-                placeholder="몸무게(선택)"
-                variant="filled"
-                // value={dogWeight}
-                w="55%"
-                {...register('dogWeight')}
-              />
-              <Badge colorScheme={timeColor} fontSize="xl" ml="1">
-                {remainingTime}
-              </Badge>
-              {/* <Text ml={1} w={'50%'}></Text> */}
+              <HStack w="75%">
+                <Input
+                  placeholder="몸무게(선택)"
+                  variant="filled"
+                  // value={dogWeight}
+                  w="75%"
+                  {...register('dogWeight')}
+                />
+                <Badge colorScheme={timeColor} display="flex" fontSize="xl" justifyContent="center" w="25%">
+                  {remainingTime}
+                </Badge>
+              </HStack>
             </HStack>
             <HStack w="100%">
-              <Text minW="25%">최근방문</Text>
-              <Badge colorScheme={visitColor} fontSize="xl" ml="1">
+              <Text w="25%">최근방문</Text>
+              <Badge colorScheme={visitColor} display="flex" fontSize="xl" justifyContent="center" w="50%">
                 {lastVisited}
               </Badge>
             </HStack>

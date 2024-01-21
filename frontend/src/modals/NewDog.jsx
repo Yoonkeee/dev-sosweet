@@ -62,7 +62,7 @@ const NewDog = ({ isOpen, onClose }) => {
               {...register('dogName', { required: '댕댕이 이름 입력해주세요!!' })}
             />
             <Input
-              placeholder="메세지에 보낼 댕댕이 이름(선택) 미입력시 이름과 동일"
+              placeholder="메세지에 표시할 이름, 미입력시 이름과 동일(선택)"
               variant="filled"
               {...register('officialName')}
             />

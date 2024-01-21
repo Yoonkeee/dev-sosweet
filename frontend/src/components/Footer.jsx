@@ -1,5 +1,5 @@
-import { Button, Flex, HStack, Image, Text, VStack } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Button, Link as StyledLink, Flex, HStack, Image, Text, VStack } from '@chakra-ui/react';
+import { Link as RouterDomLink, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
@@ -74,10 +74,10 @@ export const Footer = () => {
           text="결제"
         />
 
-        <Flex aspectRatio={1} h="100%" justifyContent="center">
-          <Link to="/">
-            <Image h="8vh" src={LogoImage} />
-          </Link>
+        <Flex alignContent="flex-start" aspectRatio={1} h="100%" justifyContent="center">
+          <StyledLink alignItems="flex-start" as={RouterDomLink} to="/">
+            <Image h="90%" src={LogoImage} />
+          </StyledLink>
         </Flex>
         <FooterButton onClick={onTimetableClick} svg={TimeIcon} text="시간표" />
         <FooterButton
@@ -107,8 +107,8 @@ const ModalSwitch = ({ onClose, openModal }) => {
 };
 
 const FooterButton = ({ onClick, svg, text }) => (
-  <Button aspectRatio={1} bgColor="transparent" h="100%" onClick={onClick} paddingTop="1vh">
-    <VStack h="100%" m={0} p={0} w="100%">
+  <Button aspectRatio={1} bgColor="transparent" h="100%" onClick={onClick} paddingTop="10px">
+    <VStack gap="0.3rem" h="100%" m={0} p={0} w="100%">
       <Image boxSize={8} minInlineSize={8} src={svg} />
       <Text fontSize="sm" marginY={0} p={0}>
         {text}

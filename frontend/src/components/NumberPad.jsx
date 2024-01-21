@@ -6,7 +6,7 @@ export const NumberPad = ({ onDelete, onInput }) => {
   const numbers = Array.from({ length: 9 }, (_, i) => i + 1);
   numbers.push(null, 0);
   return (
-    <SimpleGrid columns={3} h="100%" w="100%">
+    <SimpleGrid columns={3} h="100%" maxH="500px" maxW="400px" w="100%">
       {numbers.map(i => (
         <NumberElement key={i} number={i} onClick={onClick} />
       ))}
@@ -17,7 +17,7 @@ export const NumberPad = ({ onDelete, onInput }) => {
 
 const NumberElement = ({ number, onClick }) =>
   Number.isInteger(number) ? (
-    <Box aspectRatio={1} h="100%" p="10%">
+    <Box aspectRatio={1} h="90%" m="2%" maxH="130px" p="10%">
       <Button
         _hover={{ textDecoration: 'none', color: 'white', rounded: 'full', transform: 'scale(1.1)' }}
         aspectRatio={1}
@@ -40,10 +40,11 @@ const NumberElement = ({ number, onClick }) =>
   );
 
 const DeleteElement = ({ onClick }) => (
-  <Box aspectRatio={1} h="100%" p="10%">
+  <Box aspectRatio={1} h="90%" m="2%" maxH="130px" p="10%">
     <IconButton
       _hover={{ textDecoration: 'none', color: 'white', rounded: 'full', transform: 'scale(1.1)' }}
       aria-label="Backspace"
+      aspectRatio={1}
       bg="#1a2a52"
       border="2px solid white"
       color="white"

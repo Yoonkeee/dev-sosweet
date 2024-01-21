@@ -8,13 +8,14 @@ export const PasswordInput = ({ pinLength }) => {
       pinInputs[i].current.value = '🐶';
     });
   }, [pinLength]);
+
   return (
     <HStack h="100%" justifyContent="center" w="100%">
       <PinInput otp placeholder="" size="lg" type="number">
-        <PinInputField ref={pinInputs[0]} fontSize="3xl" />
-        <PinInputField ref={pinInputs[1]} fontSize="3xl" />
-        <PinInputField ref={pinInputs[2]} fontSize="3xl" />
-        <PinInputField ref={pinInputs[3]} fontSize="3xl" />
+        <PinInputField ref={pinInputs[0]} color="white" cursor="not-allowed" fontSize="3xl" readOnly />
+        <PinInputField ref={pinInputs[1]} color="white" cursor="not-allowed" fontSize="3xl" readOnly />
+        <PinInputField ref={pinInputs[2]} color="white" cursor="not-allowed" fontSize="3xl" readOnly />
+        <PinInputField ref={pinInputs[3]} color="white" cursor="not-allowed" fontSize="3xl" readOnly />
       </PinInput>
     </HStack>
   );

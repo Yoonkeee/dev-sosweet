@@ -221,11 +221,7 @@ const CheckoutTimetableRow = ({
 
 const PaidOnCheckoutDay = () => (
   <Button
-    _hover={{
-      textDecoration: 'none',
-      color: 'white',
-      transform: 'scale(1.2)',
-    }}
+    _hover={{}}
     color="#f8f8f8"
     colorScheme="telegram"
     fontSize="md"

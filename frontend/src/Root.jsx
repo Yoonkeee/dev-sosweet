@@ -8,6 +8,7 @@ import { getHeaderTopPosition, mainColor } from './api';
 import { authenticationAtom } from './store/authentication';
 import { Authentication } from './routes';
 import { SkeletonContainer } from './components/Skeleton';
+import { NoticeDemo } from './modals/NoticeDemo';
 
 // const getMobileSafeAreaMargin = () => {
 //   try {
@@ -134,6 +135,7 @@ export const Root = () => {
           'GmarketSans, Pretendard, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol',
       }}
     >
+      <NoticeDemo />
       {isAuthorized ? (
         <>
           <Header />
