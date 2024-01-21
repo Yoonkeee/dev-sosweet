@@ -868,7 +868,7 @@ class Interface:
     def not_out_timetable(self):
         today = datetime.today().strftime('%Y-%m-%d')
         select_query = f"""
-        select name, date
+        select name, date, id
         from timetable
         where out_time is null
         and

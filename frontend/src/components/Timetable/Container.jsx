@@ -5,8 +5,9 @@ import { getCheckoutTimetable, getTimeTable } from '../../api';
 import { currentDateState } from '../../store/store';
 import CheckoutTimetableRow from '../Rows/CheckoutTimetableRow';
 import TimetableRow from '../Rows/TimetableRow';
+import { RefreshOrSetDateToday } from '../Rows/RefreshOrSetDateToday';
 
-export const Container = () => {
+export const Container = ({ onRefresh }) => {
   const date = useRecoilValue(currentDateState);
   const { isLoading: isCheckoutTableLoading, data: checkoutData } = useQuery({
     queryKey: ['checkoutTimetable', date],
@@ -25,6 +26,7 @@ export const Container = () => {
       {checkoutData?.map(item => (
         <CheckoutTimetableRow key={item.id} {...item} />
       ))}
+      <RefreshOrSetDateToday onRefresh={onRefresh} />
     </VStack>
   );
 };

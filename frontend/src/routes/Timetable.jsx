@@ -33,7 +33,7 @@ export const Timetable = () => {
         description:
           notOutData &&
           notOutData.map(notOut => (
-            <Text>
+            <Text key={notOut.id}>
               {strToLocaleWithoutWeekday(notOut.date)} {notOut.name}
             </Text>
           )),
@@ -72,7 +72,7 @@ export const Timetable = () => {
       >
         <DateController date={date} onNext={setNextDate} onPrev={setPrevDate} onRefresh={onRefresh} />
       </Flex>
-      {isRendered ? <Container /> : <SpinnerOnRefresh />}
+      {isRendered ? <Container onRefresh={onRefresh} /> : <SpinnerOnRefresh />}
     </VStack>
   );
 };

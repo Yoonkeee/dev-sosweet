@@ -1,50 +1,15 @@
-import { Box, Flex, HStack, Text } from '@chakra-ui/react';
+import { HStack, Text } from '@chakra-ui/react';
 import { Temporal } from 'temporal-polyfill';
-import { useEffect, useRef, useState } from 'react';
-import _ from 'lodash';
 import { ArrowForward } from '../CustomIcons/ArrowForward';
 import { ArrowBackward } from '../CustomIcons/ArrowBackward';
-import { Refresh } from '../CustomIcons/Refresh';
 
-export const DateController = ({ date, onNext, onPrev, onRefresh = null }) => {
-  const [displayDay, setDisplayDay] = useState(true);
-  const containerRef = useRef(null);
-  const elementRef = useRef(null);
-  const [threshold, setThreshold] = useState(0);
-
-  const getSize = () => {
-    if (!containerRef.current || !elementRef.current) return;
-    const containerWidth = containerRef.current.getBoundingClientRect().width;
-    const elementWidth = elementRef.current.getBoundingClientRect().width;
-
-    if (displayDay && elementWidth / containerWidth >= 0.6) {
-      setDisplayDay(false);
-      setThreshold(window.innerWidth);
-    }
-    if (!displayDay && window.innerWidth > threshold) setDisplayDay(true);
-  };
-
-  window.addEventListener('resize', _.debounce(getSize, 200));
-
-  useEffect(() => {
-    getSize();
-    return window.removeEventListener('resize', getSize);
-  }, []);
-
-  return (
-    <HStack h="6vh" justifyContent="space-between" px="4%" py="0.5vh" w="100%">
-      <Dummy exist={!!onRefresh} />
-      <HStack ref={containerRef} h="100%" justifyContent="center" maxW="70%">
-        <ArrowButton onPrev={onPrev} />
-        <DateWithDay date={date} displayDay={displayDay} elementRef={elementRef} />
-        <ArrowButton onNext={onNext} />
-      </HStack>
-      <RefreshButton onRefresh={onRefresh} />
-    </HStack>
-  );
-};
-
-const Dummy = exist => (exist ? <Box aspectRatio={1} h="100%" /> : null);
+export const DateController = ({ date, onNext, onPrev }) => (
+  <HStack h="6vh" justifyContent="center" px="4%" py="0.5vh" w="100%">
+    <ArrowButton onPrev={onPrev} />
+    <DateWithDay date={date} />
+    <ArrowButton onNext={onNext} />
+  </HStack>
+);
 
 const ArrowButton = ({ onNext = null, onPrev = null }) => {
   const Button = onNext ? ArrowForward : ArrowBackward;
@@ -71,81 +36,38 @@ const ArrowButton = ({ onNext = null, onPrev = null }) => {
   );
 };
 
-const RefreshButton = ({ onRefresh }) =>
-  onRefresh ? (
-    <Flex aspectRatio={1} h="80%">
-      <Refresh
-        _hover={{
-          textDecoration: 'none',
-          color: 'white',
-          bg: '#2cd65d',
-          rounded: 'xl',
-          transform: 'scale(1.1)',
-        }}
-        bg="#19d050"
-        color="white"
-        h="100%"
-        onClick={() => onRefresh()}
-        py="6px"
-        rounded="xl"
-        transitionDuration="0.2s"
-        w="100%"
-      />
-    </Flex>
-  ) : null;
-
-const DateWithDay = ({ date, displayDay, elementRef }) => {
-  const formattedMonthDate = Temporal.PlainDate.from(date).toLocaleString('ko-KR', {
-    month: 'long',
-    day: 'numeric',
-  });
-  const formattedMonth = Temporal.PlainDate.from(date).toLocaleString('ko-KR', {
-    month: 'long',
-  });
+const DateWithDay = ({ date }) => {
   const formattedDate = Temporal.PlainDate.from(date).toLocaleString('ko-KR', {
+    month: 'long',
     day: 'numeric',
   });
-
-  const day = Temporal.PlainDate.from(date).toLocaleString('ko-KR', {
+  const formattedDay = Temporal.PlainDate.from(date).toLocaleString('ko-KR', {
     weekday: 'long',
   });
 
   let dayColor = '#1a2a52';
-  if (day === '금요일') {
+  if (formattedDay === '금요일') {
     dayColor = '#3063cb';
-  } else if (day === '토요일') {
+  } else if (formattedDay === '토요일') {
     dayColor = 'blue';
-  } else if (day === '일요일') {
+  } else if (formattedDay === '일요일') {
     dayColor = 'red';
   }
 
   return (
-    <HStack ref={elementRef} gap={2} marginX="10px">
-      <Text display="none" id="formattedNowDateTimetable">
-        {formattedMonthDate}
+    <HStack gap={2} marginX="10px">
+      <Text
+        fontSize="2xl"
+        fontWeight="900"
+        id="formattedNowDateTimetable"
+        textAlign="center"
+        whiteSpace="nowrap"
+      >
+        {formattedDate}
       </Text>
-      <HStack gap={0}>
-        <Text fontSize="2xl" fontWeight="900" mr="0.25rem" textAlign="center" whiteSpace="nowrap">
-          {formattedMonth}
-        </Text>
-        <Text
-          color={displayDay ? 'black' : dayColor}
-          fontSize="2xl"
-          fontWeight="900"
-          textAlign="center"
-          whiteSpace="nowrap"
-        >
-          {formattedDate.slice(0, -1)}
-        </Text>
-        <Text fontSize="2xl" fontWeight="900" textAlign="center" whiteSpace="nowrap">
-          일
-        </Text>
-      </HStack>
-      {displayDay ? (
-        <Text color={dayColor} fontSize="2xl" fontWeight="900" textAlign="center" whiteSpace="nowrap">
-          {day}
-        </Text>
-      ) : null}
+      <Text color={dayColor} fontSize="2xl" fontWeight="900" textAlign="center" whiteSpace="nowrap">
+        {formattedDay}
+      </Text>
     </HStack>
   );
 };

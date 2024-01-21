@@ -6,10 +6,16 @@ export const ListContainer = ({ children }) => (
   </VStack>
 );
 
-export const ListElement = ({ bgColor = '#ffffff', children, height = '4.5rem', onClick = null }) => (
+export const ListElement = ({
+  bgColor = '#ffffff',
+  border = '1px gray solid',
+  children,
+  height = '4.5rem',
+  onClick = null,
+}) => (
   <HStack
     bgColor={bgColor}
-    border="1px gray solid"
+    border={border}
     borderRadius="10px"
     cursor={onClick ? 'pointer' : 'default'}
     gap={0}
