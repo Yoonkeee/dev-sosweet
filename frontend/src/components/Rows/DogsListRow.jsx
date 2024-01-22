@@ -9,7 +9,7 @@ const DogsListRow = ({ name, note, remaining_minutes: remainingMinutes }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
-    <HStack gap={0} h="100%" justifyContent="space-between" w="100%">
+    <HStack gap={0} h="90px" justifyContent="space-between" w="100%">
       <Flex h="100%" p={0} textAlign="center" w="50%">
         <NameProfileImage color={textColor} name={name} />
       </Flex>

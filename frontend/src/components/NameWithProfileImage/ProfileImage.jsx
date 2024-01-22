@@ -70,7 +70,27 @@ const Element = ({ name, w }) => {
           w="100%"
         />
       ) : (
-        <DogFace boxSize={16} h="90%" maxH="100px" minH="60px" />
+        <Flex
+          alignContent="center"
+          alignItems="center"
+          aspectRatio={1}
+          bgColor="transparent"
+          border="3px lightgray solid"
+          cursor="pointer"
+          display="flex"
+          h="100%"
+          justifyContent="center"
+          m={0}
+          maxH="100px"
+          minH="60px"
+          onClick={e => {
+            e.stopPropagation();
+          }}
+          rounded="full"
+          w="100%"
+        >
+          <DogFace boxSize={14} h="90%" maxH="100px" minH="60px" mt="5px" />
+        </Flex>
       )}
       {isOpen ? <Polaroid isOpen={isOpen} name={name} onClose={onClose} profileUrl={data} /> : null}
     </Flex>

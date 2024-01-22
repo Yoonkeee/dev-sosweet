@@ -55,7 +55,14 @@ export const Root = () => {
         {isAuthorized ? (
           <>
             <Header />
-            <VStack bgColor="#E2E8F0" minH="80vh" position="relative" top={getHeaderTopPosition()} w="100%">
+            <VStack
+              bgColor="#E2E8F0"
+              gap={0}
+              minH="80vh"
+              position="relative"
+              top={getHeaderTopPosition()}
+              w="100%"
+            >
               <Suspense fallback={<SkeletonContainer />}>
                 <Outlet />
                 <Box h="10vh" w="100%" />
