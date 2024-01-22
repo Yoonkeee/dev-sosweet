@@ -31,12 +31,12 @@ const Header = () => (
       <Text fontSize="xl" px={0} textAlign="center" w="50%">
         이름
       </Text>
-      <Text fontSize="xl" px={0} textAlign="center" w="35%">
+      <Text fontSize="xl" lineHeight={1.25} px={0} textAlign="center" w="35%">
         특이
         <br />
         사항
       </Text>
-      <Text fontSize="xl" px={0} textAlign="center" w="15%">
+      <Text fontSize="xl" lineHeight={1.25} px={0} textAlign="center" w="15%">
         잔여
         <br />
         시간

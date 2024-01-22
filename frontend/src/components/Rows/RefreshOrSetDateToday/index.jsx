@@ -7,7 +7,7 @@ import { ArrowForward } from '../../CustomIcons/ArrowForward';
 
 export const RefreshOrSetDateToday = ({ onRefresh }) => (
   <ListElement border="">
-    <HStack h="100%" justifyContent="space-evenly" w="100%">
+    <HStack h="100%" justifyContent="space-evenly" px="6%" w="100%">
       <SetDateTodayButton />
       <RefreshButton onRefresh={onRefresh} />
     </HStack>

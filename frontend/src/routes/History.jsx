@@ -94,12 +94,12 @@ export const History = () => {
               </Select>
             )}
           </Flex>
-          <Text fontSize="lg" px={0} textAlign="center" w="30%">
+          <Text fontSize="lg" lineHeight={1.25} px={0} textAlign="center" w="30%">
             이용
             <br />
             내역
           </Text>
-          <Text fontSize="lg" px={0} textAlign="center" w="20%">
+          <Text fontSize="lg" lineHeight={1.25} px={0} textAlign="center" w="20%">
             매너
             <br />
             벨트

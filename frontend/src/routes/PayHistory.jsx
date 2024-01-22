@@ -57,7 +57,7 @@ const Header = () => (
       <Text fontSize="xl" px={0} textAlign="center" w="50%">
         댕댕이
       </Text>
-      <Text fontSize="xl" px={0} textAlign="center" w="25%">
+      <Text fontSize="xl" lineHeight={1.25} px={0} textAlign="center" w="25%">
         결제
         <br />
         시간

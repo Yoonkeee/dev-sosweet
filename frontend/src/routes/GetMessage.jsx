@@ -25,12 +25,12 @@ const Header = () => (
       <Text fontSize="xl" px={0} textAlign="center" w="50%">
         이름
       </Text>
-      <Text fontSize="xl" px={0} textAlign="center" w="25%">
+      <Text fontSize="xl" lineHeight={1.25} px={0} textAlign="center" w="25%">
         쌓인
         <br />
         내역
       </Text>
-      <Text fontSize="xl" px={0} textAlign="center" w="25%">
+      <Text fontSize="xl" lineHeight={1.25} px={0} textAlign="center" w="25%">
         잔여
         <br />
         시간
