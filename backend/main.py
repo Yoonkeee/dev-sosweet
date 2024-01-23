@@ -106,14 +106,14 @@ scheduler = BackgroundScheduler()
 # scheduler.add_job(execute_keep_alive, 'interval', minutes=60)
 # scheduler.add_job(execute_keep_alive, 'cron', minute='15', timezone=tz)
 for h in range(0, 24):
-#     for m in range(0, 60):
     for m in [16, 33, 48, 56]:
-    # for m in [13, 28, 43, 58]:
         scheduler.add_job(execute_keep_alive, 'cron', hour=h, minute=m, timezone=tz)
+#     for m in range(0, 60):
+    # for m in [13, 28, 43, 58]:
 for h in range(0, 24):
+    scheduler.add_job(clone_to_replica, 'cron', hour=h, minute=58, timezone=tz)
     # for m in range(0, 60):
     # for m in [6, 26, 46]:
-    scheduler.add_job(clone_to_replica, 'cron', hour=h, minute=28, timezone=tz)
 
 # scheduler.add_job(set_backup, 'interval', hours=12, next_run_time=datetime.now(tz) + timedelta(minutes=1))
 scheduler.start()
