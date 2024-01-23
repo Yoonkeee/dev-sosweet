@@ -531,5 +531,6 @@ async def reinitialize_db():
     global db_interface
     if remove_db_interface():
         db_interface = DB.Interface()
+        scheduler.start()
 
     return True
