@@ -51,13 +51,13 @@ export const NoticeDemo = () => {
         <ModalCloseButton />
         <ModalBody my={4}>
           <VStack alignItems="flex-start" fontFamily="Pretendard" textAlign="left" w="100%">
+            <p>- 로그인 비밀번호는 0000 입니다.</p>
             <p>- 본 페이지는 서비스중인 쏘스윗 매니저 앱의 데모입니다.</p>
+            <p>- 기능들을 편하게 체험해보셔도 좋습니다.</p>
             <p>
               - 이 곳에서 실행되는 결과는 Live 서비스 데이터에 영향을 주지 않으며, 일정 시간마다 Live 서비스의
               데이터를 복제하여 덮어쓰도록 설정되어 있습니다.
             </p>
-            <p>- 기능들을 편하게 체험해보셔도 좋습니다.</p>
-            <p>- 로그인 비밀번호는 0000 입니다.</p>
           </VStack>
         </ModalBody>
         <ModalFooter justifyContent="flex-end">
