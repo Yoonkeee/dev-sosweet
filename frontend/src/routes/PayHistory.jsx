@@ -1,11 +1,11 @@
 import { Flex, HStack, Text } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { getHeaderTopPosition, getPayHistory } from '../api';
 import PayHistoryRow from '../components/Rows/PayHistoryRow';
 import { ListContainer } from '../components/List';
 
 export const PayHistory = () => {
-  const { data } = useQuery({ queryKey: ['getPayHistory'], queryFn: getPayHistory });
+  const { data } = useSuspenseQuery({ queryKey: ['getPayHistory'], queryFn: getPayHistory });
   // const mutation = useMutation(getPayHistory, {
   //   onSuccess: (response) => {
   //     toast({

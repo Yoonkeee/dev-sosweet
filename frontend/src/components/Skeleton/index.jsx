@@ -1,18 +1,8 @@
 import { Flex, HStack, Skeleton, Spinner, VStack } from '@chakra-ui/react';
 
-export const SkeletonContainer = () => (
+export const SkeletonContainer = ({ amount = 10 }) => (
   <VStack bgColor="white" minH="80vh" position="relative" py="2vh" w="100%">
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
-    <SkeletonElement />
+    {amount && [...Array(amount)].map((_, i) => <SkeletonElement key={`skeleton-${i}`} />)}
   </VStack>
 );
 

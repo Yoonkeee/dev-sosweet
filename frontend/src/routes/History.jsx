@@ -1,5 +1,5 @@
 import { Flex, HStack, Select, Text, useToast, VStack } from '@chakra-ui/react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import HistoryRow from '../components/Rows/HistoryRow.jsx';
 import { dogsList, getHeaderTopPosition, getHistory } from '../api';
@@ -8,12 +8,12 @@ import { ListElement } from '../components/List';
 export const History = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const { isLoading: selectIsLoading, data: selectData } = useQuery({
+  const { isLoading: selectIsLoading, data: selectData } = useSuspenseQuery({
     queryKey: ['dogs-list'],
     queryFn: dogsList,
   });
   const [name, setName] = useState('ALL');
-  const { isLoading, data } = useQuery({ queryKey: ['history', name], queryFn: getHistory });
+  const { isLoading, data } = useSuspenseQuery({ queryKey: ['history', name], queryFn: getHistory });
   const mutation = useMutation({
     mutationFn: getHistory,
     onSuccess: response => {

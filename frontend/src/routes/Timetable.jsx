@@ -1,11 +1,12 @@
 import { CircularProgress, Flex, Text, useToast, VStack } from '@chakra-ui/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Suspense, useEffect, useState } from 'react';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { Container } from '../components/Timetable';
 import { DateController } from '../components/DateController';
 import { currentDateState, setNextDateState, setPrevDateState } from '../store/store';
 import { getHeaderTopPosition, notOutTimetable, strToLocaleWithoutWeekday } from '../api';
+import { SkeletonContainer } from '../components/Skeleton';
 
 export const Timetable = () => {
   const date = useRecoilValue(currentDateState);
@@ -13,7 +14,7 @@ export const Timetable = () => {
   const setNextDate = useSetRecoilState(setNextDateState);
   const [isRendered, setIsRendered] = useState(true);
   const queryClient = useQueryClient();
-  const { data: notOutData } = useQuery({ queryKey: ['notOut'], queryFn: notOutTimetable });
+  const { data: notOutData } = useSuspenseQuery({ queryKey: ['notOut'], queryFn: notOutTimetable });
   const onRefresh = () => setIsRendered(false);
 
   useEffect(() => {
@@ -72,7 +73,9 @@ export const Timetable = () => {
       >
         <DateController date={date} onNext={setNextDate} onPrev={setPrevDate} onRefresh={onRefresh} />
       </Flex>
-      {isRendered ? <Container onRefresh={onRefresh} /> : <SpinnerOnRefresh />}
+      <Suspense fallback={<SkeletonContainer amount={4} />}>
+        {isRendered ? <Container onRefresh={onRefresh} /> : <SpinnerOnRefresh />}
+      </Suspense>
     </VStack>
   );
 };

@@ -1,5 +1,5 @@
 import { VStack } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { getCheckoutTimetable, getTimeTable } from '../../api';
 import { currentDateState } from '../../store/store';
@@ -9,11 +9,11 @@ import { RefreshOrSetDateToday } from '../Rows/RefreshOrSetDateToday';
 
 export const Container = ({ onRefresh }) => {
   const date = useRecoilValue(currentDateState);
-  const { isLoading: isCheckoutTableLoading, data: checkoutData } = useQuery({
+  const { isLoading: isCheckoutTableLoading, data: checkoutData } = useSuspenseQuery({
     queryKey: ['checkoutTimetable', date],
     queryFn: getCheckoutTimetable,
   });
-  const { data: timetableData } = useQuery({
+  const { data: timetableData } = useSuspenseQuery({
     queryKey: ['timetable', date],
     queryFn: getTimeTable,
   });

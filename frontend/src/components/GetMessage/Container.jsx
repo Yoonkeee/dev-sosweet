@@ -1,5 +1,5 @@
 import { useDisclosure } from '@chakra-ui/react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import MakeMessage from '../../modals/MakeMessage';
 import GetMessageRow from '../Rows/GetMessageRow';
@@ -9,7 +9,7 @@ import { ListContainer } from '../List';
 export const Container = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const queryClient = useQueryClient();
-  const { data } = useQuery({
+  const { data } = useSuspenseQuery({
     queryKey: ['getAllUnchecked'],
     queryFn: getAllUnchecked,
   });

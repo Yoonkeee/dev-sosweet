@@ -1,5 +1,5 @@
 import { Checkbox, HStack, Text } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ListContainer } from '../components/List';
 import { getHeaderTopPosition, getPayBeltsRequired, getPayTimeRequired } from '../api';
@@ -22,11 +22,11 @@ export const PayRequired = () => {
   const beltColor = '#556eff';
   const timeColor = '#ff7f50';
 
-  const { data: payTimeRequired } = useQuery({
+  const { data: payTimeRequired } = useSuspenseQuery({
     queryKey: ['getPayTimeRequired'],
     queryFn: getPayTimeRequired,
   });
-  const { data: payBeltsRequired } = useQuery({
+  const { data: payBeltsRequired } = useSuspenseQuery({
     queryKey: ['getPayBeltsRequired'],
     queryFn: getPayBeltsRequired,
   });
