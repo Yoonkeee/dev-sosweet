@@ -73,6 +73,9 @@ class Interface:
                 #     select_qeury = f"SELECT * FROM {table_name}"
                 select_qeury = f"SELECT * FROM {table_name} where valid = 'Y'"
 
+                if table_name in ['timetable', 'used_table']:
+                    select_qeury += ' AND id > 1704010703082'
+
                 source_cursor.execute(select_qeury)
                 rows = source_cursor.fetchall()
 
