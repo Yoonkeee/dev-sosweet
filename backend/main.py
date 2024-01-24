@@ -92,11 +92,11 @@ async def test():
     return db_interface.test()
 
 
-async def execute_keep_alive():
+def execute_keep_alive():
     db_interface.keep_alive()
 
 
-async def clone_to_replica():
+def clone_to_replica():
     db_interface.clone_to_replica()
 
 
@@ -111,7 +111,7 @@ for h in range(0, 24):
 #     for m in range(0, 60):
     # for m in [13, 28, 43, 58]:
 for h in range(0, 24):
-    scheduler.add_job(clone_to_replica, 'cron', hour=h, minute=58, timezone=tz)
+    scheduler.add_job(clone_to_replica, 'cron', hour=h, minute=8, timezone=tz)
     # for m in range(0, 60):
     # for m in [6, 26, 46]:
 
