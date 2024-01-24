@@ -76,6 +76,9 @@ class Interface:
                 if table_name in ['timetable', 'used_table']:
                     select_qeury += ' AND id > 1704010703082'
 
+                if table_name == 'paid':
+                    select_qeury += " AND  date > '2024-01-01'"
+
                 source_cursor.execute(select_qeury)
                 rows = source_cursor.fetchall()
 
