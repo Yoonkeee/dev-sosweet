@@ -528,9 +528,10 @@ def remove_db_interface():
 
 @app.get("/api/get/restart-db-connection")
 async def reinitialize_db():
+    scheduler.pause()
     global db_interface
     if remove_db_interface():
         db_interface = DB.Interface()
-        scheduler.start()
+        scheduler.resume()
 
     return True
