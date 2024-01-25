@@ -61,7 +61,7 @@ export const NoticeDemo = () => {
           </VStack>
         </ModalBody>
         <ModalFooter justifyContent="flex-end">
-          <Checkbox mr="10%" onClick={closeForOneHour} size="lg">
+          <Checkbox mr="10%" onChange={closeForOneHour} size="lg">
             <Text onClick={closeForOneHour}>1시간동안 보지 않기</Text>
           </Checkbox>
           <Button colorScheme="blue" mr={3} onClick={onClose}>
