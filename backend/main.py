@@ -167,7 +167,7 @@ async def add_profile(request: ProfileModel):
 @app.get("/api/get/profile/{name}")
 async def get_profile(name: str):
     result = db_interface.get_profile(name)
-    print('in get_profile', name)
+    # print('in get_profile', name)
     # print(result)
     if result:
         return result
@@ -394,7 +394,7 @@ async def mod_pay(request: DictModel):
 # get_id_belt
 @app.get('/api/get/id-belt/{row_id}')
 async def get_id_belt(row_id: int):
-    print('in get_id_belt')
+    # print('in get_id_belt')
     # print(row_id)
     result = db_interface.get_id_belt(row_id)
     # print(result)
@@ -471,7 +471,7 @@ async def get_id_info(row_id: int):
 # get allergy
 @app.get('/api/get/allergy/{name}')
 async def get_allergy(name: str):
-    print('in get_allergy')
+    # print('in get_allergy')
     # print(row_id)
     result = db_interface.get_allergy(name)
     # print(result)
