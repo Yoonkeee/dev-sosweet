@@ -134,7 +134,7 @@ const CheckoutTimetableRow = ({
           justifyContent="center"
           px={0}
           textAlign="center"
-          w="calc(min(1rem + 8vw, 3.5rem))"
+          w="calc(min(1rem + 8vw, 3rem))"
         >
           {paidToday ? (
             <PaidOnCheckoutDay />

@@ -8,7 +8,7 @@ export const Name = ({ color = '#1a2a52', name }) => {
       <Text
         color={color}
         cursor="pointer"
-        fontSize="xl"
+        fontSize="lg"
         fontWeight={600}
         isTruncated
         lineHeight={1}

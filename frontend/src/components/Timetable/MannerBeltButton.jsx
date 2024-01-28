@@ -16,7 +16,7 @@ export const MannerBeltButton = ({ belts, setBelts }) => {
   const beltBadgeColor = belts > 0 ? 'orange.300' : 'green.500';
   const content = belts || '벨트';
   const fontSize = belts ? '2xl' : 'lg';
-  const fontWeight = belts ? 900 : 600;
+  const fontWeight = belts ? 800 : 600;
   return (
     <Popover>
       <PopoverTrigger>

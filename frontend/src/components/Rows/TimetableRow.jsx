@@ -74,33 +74,48 @@ const TimetableRow = ({
           >
             {in_time} ~
           </Text>
-          <Button
-            _hover={{
-              textDecoration: 'none',
-              color: 'white',
-              bg: '#526491',
-              transform: 'scale(1.2)',
-            }}
-            bg="#1a2a52"
-            color="white"
-            fontSize="lg"
-            fontWeight={800}
-            h="3.5vh"
+          <Flex
+            alignContent="center"
+            justifyContent="center"
             ml="5%"
-            onClick={onOutOpen}
-            position="inherit"
-            size="sm"
-            w="3.5rem"
+            px={0}
+            textAlign="center"
+            // w="3rem"
+            w="calc(min(1rem + 8vw, 3rem))"
           >
-            퇴장
-          </Button>
+            <Button
+              _hover={{
+                textDecoration: 'none',
+                color: 'white',
+                bg: '#526491',
+                transform: 'scale(1.2)',
+              }}
+              bg="#1a2a52"
+              color="white"
+              fontSize="lg"
+              fontWeight={800}
+              h="3.5vh"
+              // ml="5%"
+              onClick={onOutOpen}
+              position="inherit"
+              size="sm"
+              w="100%"
+              // w="calc(min(1rem + 8vw, 3.5rem))"
+              // w="3rem"
+            >
+              <Text fontFamily="GmarketSans" fontSize="lg" fontWeight="800">
+                퇴장
+              </Text>
+            </Button>
+          </Flex>
         </LiquifiedStack>
         <Flex
           alignContent="center"
           justifyContent="center"
           px={0}
           textAlign="center"
-          w="calc(min(1rem + 8vw, 3.5rem))"
+          // w="3rem"
+          w="calc(min(1rem + 8vw, 3rem))"
         >
           <MannerBeltButton belts={belts} setBelts={setBelts} />
         </Flex>
