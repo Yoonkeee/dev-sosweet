@@ -1,5 +1,5 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { Box, Flex, HStack, Image, Text, useMediaQuery, VStack } from '@chakra-ui/react';
+import { Flex, HStack, Image, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import {
   authenticationAtom,
@@ -23,7 +23,6 @@ export const Authentication = () => {
   const [color, setColor] = useState('white');
   const [timeoutId, setTimeoutId] = useState(0);
   const [remainingTime, setRemainingTime] = useState('initialized');
-  const [isLogoVisible] = useMediaQuery('(min-height: 800px)');
 
   const resetAuthFailureAtom = () => setFailure({ status: false, enableOn: null });
   const resetWrongStackAtom = () => setWrongStack(0);
@@ -127,23 +126,14 @@ export const Authentication = () => {
   return (
     <VStack alignContent="center" bgColor="#1a2a52" h="100vh" minH="100vh" pt={'5vh'} w="100%">
       <HStack h={'16%'} gap={0}>
-        {isLogoVisible ? (
-          <>
-            <Image filter="invert(1)" src={LogoDog} h={'80%'} />
-            <Image filter="invert(1)" src={LogoWord} h={'50%'} />
-          </>
-        ) : null}
+        <Image filter="invert(1)" src={LogoDog} h={'80%'} />
+        <Image filter="invert(1)" src={LogoWord} h={'50%'} />
       </HStack>
       {failure.status ? (
         <Locked remainingTime={remainingTime} />
       ) : (
-        <VStack
-          w={'100%'}
-          h={isLogoVisible ? '80%' : '100%'}
-          mb={isLogoVisible ? null : '10vh'}
-          justifyContent={'flex-start'}
-        >
-          <Flex h="15%" w="50%">
+        <VStack w={'100%'} h={'84%'} mb={'10vh'} justifyContent={'flex-start'}>
+          <Flex h="auto" w="50%">
             <PasswordInput pinLength={pin.length} />
           </Flex>
           <Text
@@ -153,13 +143,13 @@ export const Authentication = () => {
             fontSize="xl"
             h={'5%'}
             fontWeight={500}
-            mb="2vh"
+            my="1vh"
           >
             {text}
           </Text>
-          <VStack w="80%" h={'80%'} gap={0}>
+          <Flex w="80%" h={'auto'} justifyContent={'center'} alignItems={'flex-start'}>
             <NumberPad onInput={onInput} onDelete={onDelete} />
-          </VStack>
+          </Flex>
         </VStack>
       )}
     </VStack>
