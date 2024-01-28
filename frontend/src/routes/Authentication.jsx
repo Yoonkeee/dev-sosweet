@@ -124,10 +124,18 @@ export const Authentication = () => {
   }, [pin]);
 
   return (
-    <VStack alignContent="center" bgColor="#1a2a52" h="100vh" minH="100vh" pt={'5vh'} w="100%">
-      <HStack h={'16%'} gap={1}>
-        <Image filter="invert(1)" src={LogoDog} h={'80%'} w={'auto'} />
-        <Image filter="invert(1)" src={LogoWord} h={'50%'} w={'auto'} />
+    <VStack
+      alignContent="center"
+      bgColor="#1a2a52"
+      h="100vh"
+      alignItems={'center'}
+      minH="100vh"
+      pt={'5vh'}
+      w="100%"
+    >
+      <HStack h={'16%'} gap={1} w={'100%'} justifyContent={'center'}>
+        <Image filter="invert(1)" src={LogoDog} h={'80%'} />
+        <Image filter="invert(1)" src={LogoWord} h={'50%'} />
       </HStack>
       {failure.status ? (
         <Locked remainingTime={remainingTime} />
