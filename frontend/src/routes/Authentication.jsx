@@ -125,7 +125,7 @@ export const Authentication = () => {
   }, [pin]);
 
   return (
-    <VStack alignContent="center" bgColor="#1a2a52" h="100vh" minH="100vh" pt={'2vh'} w="100%">
+    <VStack alignContent="center" bgColor="#1a2a52" h="100vh" minH="100vh" pt={'5vh'} w="100%">
       <HStack h={'16%'} gap={0}>
         {isLogoVisible ? (
           <>
