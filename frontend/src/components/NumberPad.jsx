@@ -20,6 +20,7 @@ const NumberElement = ({ number, onClick }) =>
     <Box aspectRatio={1} m="2%" maxH="130px" p="10%" w="100%">
       <Button
         _hover={{ textDecoration: 'none', color: 'white', rounded: 'full', transform: 'scale(1.1)' }}
+        aspectRatio={1}
         bg="#1a2a52"
         border="2px solid white"
         color="white"
@@ -29,7 +30,6 @@ const NumberElement = ({ number, onClick }) =>
         onClick={() => onClick(number)}
         p={0}
         rounded="full"
-        w="100%"
       >
         <Text>{number}</Text>
       </Button>
@@ -53,7 +53,6 @@ const DeleteElement = ({ onClick }) => (
       onClick={onClick}
       p={0}
       rounded="full"
-      w="100%"
     />
   </Box>
 );
