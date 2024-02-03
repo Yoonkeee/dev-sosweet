@@ -30,7 +30,6 @@ const NumberElement = ({ number, onClick }) =>
         onClick={() => onClick(number)}
         p={0}
         rounded="full"
-        w="100%"
       >
         <Text>{number}</Text>
       </Button>
