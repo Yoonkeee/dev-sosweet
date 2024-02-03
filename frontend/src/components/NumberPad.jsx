@@ -26,10 +26,10 @@ const NumberElement = ({ number, onClick }) =>
         color="white"
         fontSize="2xl"
         fontWeight="bold"
-        h="100%"
         onClick={() => onClick(number)}
         p={0}
         rounded="full"
+        w="90%"
       >
         <Text>{number}</Text>
       </Button>
@@ -48,12 +48,11 @@ const DeleteElement = ({ onClick }) => (
       border="2px solid white"
       color="white"
       fontSize="3xl"
-      h="100%"
       icon={<ArrowBackward boxSize={8} />}
       onClick={onClick}
       p={0}
       rounded="full"
-      w="100%"
+      w="90%"
     />
   </Box>
 );
