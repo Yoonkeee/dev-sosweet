@@ -166,7 +166,7 @@ export const Authentication = () => {
           >
             {text}
           </Text>
-          <Flex w="80%" h={'auto'} justifyContent={'center'} alignItems={'flex-start'}>
+          <Flex w="80%" h={'auto'} justifyContent={'center'} alignItems={'center'}>
             <NumberPad onInput={onInput} onDelete={onDelete} />
           </Flex>
         </VStack>

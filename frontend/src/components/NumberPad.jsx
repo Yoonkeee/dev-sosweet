@@ -1,4 +1,4 @@
-import { Box, Button, Flex, IconButton, SimpleGrid, Text } from '@chakra-ui/react';
+import { Button, Flex, IconButton, SimpleGrid, Text } from '@chakra-ui/react';
 import { ArrowBackward } from './CustomIcons/ArrowBackward';
 
 export const NumberPad = ({ onDelete, onInput }) => {
