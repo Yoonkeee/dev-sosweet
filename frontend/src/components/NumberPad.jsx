@@ -17,19 +17,19 @@ export const NumberPad = ({ onDelete, onInput }) => {
 
 const NumberElement = ({ number, onClick }) =>
   Number.isInteger(number) ? (
-    <Box aspectRatio={1} m="2%" maxH="130px" p="10%" w="100%">
+    <Box aspectRatio={1} m="2%" maxH="130px" p="10%" w="90%">
       <Button
         _hover={{ textDecoration: 'none', color: 'white', rounded: 'full', transform: 'scale(1.1)' }}
-        aspectRatio={1}
         bg="#1a2a52"
         border="2px solid white"
         color="white"
         fontSize="2xl"
         fontWeight="bold"
+        h="100%"
         onClick={() => onClick(number)}
         p={0}
         rounded="full"
-        w="90%"
+        w="100%"
       >
         <Text>{number}</Text>
       </Button>
@@ -39,7 +39,7 @@ const NumberElement = ({ number, onClick }) =>
   );
 
 const DeleteElement = ({ onClick }) => (
-  <Box aspectRatio={1} m="2%" maxH="130px" p="10%" w="100%">
+  <Box aspectRatio={1} m="2%" maxH="130px" p="10%" w="90%">
     <IconButton
       _hover={{ textDecoration: 'none', color: 'white', rounded: 'full', transform: 'scale(1.1)' }}
       aria-label="Backspace"
@@ -48,11 +48,12 @@ const DeleteElement = ({ onClick }) => (
       border="2px solid white"
       color="white"
       fontSize="3xl"
+      h="100%"
       icon={<ArrowBackward boxSize={8} />}
       onClick={onClick}
       p={0}
       rounded="full"
-      w="90%"
+      w="100%"
     />
   </Box>
 );
