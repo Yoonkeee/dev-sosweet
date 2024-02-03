@@ -19,6 +19,7 @@ import requests
 import logging
 # from dotenv import load_dotenv
 from dotenv import dotenv_values
+from collections import deque
 
 
 # load env variables. This replaces environ.
@@ -71,11 +72,21 @@ app.add_middleware(
 CF_ID, CF_TOKEN = env["CF_ID"], env["CF_TOKEN"]
 # CF_ID, CF_TOKEN = ${CF_ID}, ${CF_TOKEN}
 
+logs = deque(maxlen=200)
+
 
 @app.middleware("http")
 async def log_date_time(request: Request, call_next):
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     user_agent = request.headers.get("User-Agent", "unknown")
+
+    platform = request.headers['sec-ch-ua-platform'].replace('\\', '')
+    platform = platform.replace('"', '')
+    log_time = datetime.now().strftime('%m-%d %H:%M')
+    log = f'{log_time} / {platform}'
+    if log not in logs:
+        logs.appendleft(log)
+
     print(f"Request user: {user_agent}")
     print(f"Request time: {current_time}")
     response = await call_next(request)
@@ -535,3 +546,8 @@ async def reinitialize_db():
         scheduler.resume()
 
     return True
+
+
+@app.get("/api/get/logs")
+async def get_logs():
+    return logs
