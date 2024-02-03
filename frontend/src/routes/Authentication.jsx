@@ -130,7 +130,7 @@ export const Authentication = () => {
       h="100vh"
       alignItems={'center'}
       minH="100vh"
-      pt={'6vh'}
+      pt={'8vh'}
       w="100%"
       justifyContent={'center'}
     >
@@ -166,7 +166,7 @@ export const Authentication = () => {
           >
             {text}
           </Text>
-          <Flex w="80%" h={'auto'} mt={'auto'} justifyContent={'center'} alignItems={'center'}>
+          <Flex w="80%" h={'auto'} justifyContent={'center'} alignItems={'center'}>
             <NumberPad onInput={onInput} onDelete={onDelete} />
           </Flex>
         </VStack>
