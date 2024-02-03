@@ -132,7 +132,7 @@ export const Authentication = () => {
       minH="100vh"
       pt={'6vh'}
       w="100%"
-      justifyContent={'space-evenly'}
+      justifyContent={'center'}
     >
       <HStack h={'16%'} gap={1} w={'100%'} justifyContent={'center'} minH={'16%'}>
         <Image
@@ -166,7 +166,7 @@ export const Authentication = () => {
           >
             {text}
           </Text>
-          <Flex w="80%" h={'auto'} justifyContent={'center'} alignItems={'center'}>
+          <Flex w="80%" h={'auto'} mt={'auto'} justifyContent={'center'} alignItems={'center'}>
             <NumberPad onInput={onInput} onDelete={onDelete} />
           </Flex>
         </VStack>
