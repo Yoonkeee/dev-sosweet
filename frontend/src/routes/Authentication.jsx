@@ -132,6 +132,7 @@ export const Authentication = () => {
       minH="100vh"
       pt={'6vh'}
       w="100%"
+      justifyContent={'space-evenly'}
     >
       <HStack h={'16%'} gap={1} w={'100%'} justifyContent={'center'} minH={'16%'}>
         <Image
