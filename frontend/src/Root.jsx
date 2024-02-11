@@ -36,6 +36,7 @@ export const Root = () => {
         });
         navigate('/on-error');
       }}
+      resetKeys={[pathname]}
     >
       <VStack
         ref={div}
