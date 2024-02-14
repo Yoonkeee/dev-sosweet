@@ -6,7 +6,7 @@ export default defineConfig({
   publicDir: '/public',
   server: {
     proxy: {
-      '/api': { target: 'http://211.250.82.235:55000', changeOrigin: true }, // Local Dev Server
+      '/api': { target: 'http://211.250.82.235:55000', changeOrigin: true }, // Dev Server
     },
   },
 });
