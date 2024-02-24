@@ -4,7 +4,7 @@ import AlbumListRow from '../Rows/AlbumListRow';
 import { ListContainer } from '../List';
 import { Button } from '@chakra-ui/react';
 
-export const AlbumLilstContainer = () => {
+export const AlbumListContainer = () => {
   const { data } = useSuspenseQuery({
     queryKey: ['getAllUnchecked'],
     queryFn: getAllUnchecked,

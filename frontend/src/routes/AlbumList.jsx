@@ -1,5 +1,5 @@
 import { HStack, Text } from '@chakra-ui/react';
-import { AlbumLilstContainer } from '../components/AlbumLIst/Container';
+import { AlbumListContainer } from '../components/AlbumLIst/Container';
 import { ListContainer } from '../components/List';
 import { getHeaderTopPosition, getPayBeltsRequired, getPayTimeRequired } from '../api';
 
@@ -7,7 +7,7 @@ export const AlbumList = () => {
   return (
     <ListContainer>
       <Header />
-      <AlbumLilstContainer />
+      <AlbumListContainer />
     </ListContainer>
   );
 };
