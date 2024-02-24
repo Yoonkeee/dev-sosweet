@@ -5,12 +5,10 @@ import { getHeaderTopPosition, getPayBeltsRequired, getPayTimeRequired } from '.
 
 export const AlbumList = () => {
   return (
-    <>
-      <ListContainer>
-        <Header />
-        <AlbumLilstContainer />
-      </ListContainer>
-    </>
+    <ListContainer>
+      <Header />
+      <AlbumLilstContainer />
+    </ListContainer>
   );
 };
 
