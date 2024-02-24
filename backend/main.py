@@ -121,15 +121,15 @@ for h in range(0, 24):
         scheduler.add_job(execute_keep_alive, 'cron', hour=h, minute=m, timezone=tz)
 #     for m in range(0, 60):
     # for m in [13, 28, 43, 58]:
-for h in range(0, 24):
-    scheduler.add_job(clone_to_replica, 'cron', hour=h, minute=8, timezone=tz)
+# for h in range(0, 24):
+#     scheduler.add_job(clone_to_replica, 'cron', hour=h, minute=8, timezone=tz)
     # for m in range(0, 60):
     # for m in [6, 26, 46]:
 
 # scheduler.add_job(set_backup, 'interval', hours=12, next_run_time=datetime.now(tz) + timedelta(minutes=1))
 scheduler.start()
 
-db_interface.clone_to_replica()
+# db_interface.clone_to_replica()
 
 class DictModel(BaseModel):
     data: dict
@@ -554,7 +554,7 @@ async def get_logs():
 
 
 @app.get("/api/get/all-albums")
-async def get_albums():
+async def get_all_albums():
     return db_interface.get_all_albums()
 
 

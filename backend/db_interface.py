@@ -973,24 +973,34 @@ class Interface:
         self.getter.execute(query)
         columns = [col[0] for col in self.getter.description]
         data = [dict(zip(columns, row)) for row in self.getter.fetchall()]
+
         return data
 
     def get_album(self, name):
-        query = f"SELECT name, url FROM album WHERE name = '{name}' AND valid = 'Y'"
-        self.getter.execute(query)
-        columns = [col[0] for col in self.getter.description]
-        data = [dict(zip(columns, row)) for row in self.getter.fetchall()]
-        return data[0]
+        try:
+            query = f"SELECT name, url FROM album WHERE name = '{name}' AND valid = 'Y'"
+            self.getter.execute(query)
+            columns = [col[0] for col in self.getter.description]
+            data = [dict(zip(columns, row)) for row in self.getter.fetchall()]
+
+            return data[0]
+        except:
+            return False
 
     def is_album_exist(self, name):
         query = f"SELECT COUNT(*) FROM album WHERE name = {name}"
         self.getter.execute(query)
         result = self.getter.fetchone()
+
         return result[0] > 0
 
     def insert_album(self, data):
         name, url = data['name'], data['url']
-        query = f"INSERT INTO album (name, url, valid) VALUES ('{name}', '{url}', 'Y')"
+        if self.is_album_exist(name):
+            query = f"UPDATE album SET url = '{url}', valid = 'Y' WHERE name = '{name}'"
+        else:
+            query = f"INSERT INTO album (name, url, valid) VALUES ('{name}', '{url}', 'Y')"
         self.setter.execute(query)
         self.db.commit()
+
         return True
