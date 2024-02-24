@@ -560,7 +560,12 @@ async def get_all_albums():
 
 @app.get("/api/get/album/{name}")
 async def get_album(name: str):
-    return db_interface.get_album(name)
+    result = db_interface.get_album(name)
+
+    if not result:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+    else:
+        return result
 
 
 @app.post("/api/post/album")
