@@ -11,6 +11,7 @@ import {
   Timetable,
   GetMessage,
 } from './routes';
+import { AlbumList } from './routes/AlbumList';
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: 'pay-required',
         element: <PayRequired />,
+      },
+      {
+        path: 'albums/admin',
+        element: <AlbumList />,
       },
     ],
   },
