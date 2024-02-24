@@ -16,7 +16,7 @@ export const AlbumLilstContainer = () => {
         Object.entries(data)
           .sort((a, b) => Math.min(...a[1].ids.map(Number)) - Math.min(...b[1].ids.map(Number)))
           .map(([dogName]) => (
-            <AlbumListRow name={dogName}>
+            <AlbumListRow name={dogName} key={dogName}>
               <Button colorScheme="green" rounded="xl" size="lg" align="center" width="130px">
                 버튼
               </Button>
