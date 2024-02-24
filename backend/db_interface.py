@@ -390,13 +390,15 @@ class Interface:
                             GROUP BY d.name
                             )
                             SELECT
-                            d.name,
-                            uta.counts,
-                            uta.ids,
-                            pum.remaining_minutes
+                                d.name,
+                                uta.counts,
+                                uta.ids,
+                                pum.remaining_minutes,
+                                IFNULL(a.url, null) as url
                             FROM dogs d
-                            LEFT JOIN UsedTableAgg uta ON d.name = uta.name
-                            LEFT JOIN PaidUsedMinutes pum ON d.name = pum.name
+                                LEFT JOIN album a ON d.name = a.name
+                                LEFT JOIN UsedTableAgg uta ON d.name = uta.name
+                                LEFT JOIN PaidUsedMinutes pum ON d.name = pum.name
                             WHERE counts > 0
                             ORDER BY d.name;
                         """
@@ -965,3 +967,30 @@ class Interface:
         columns = [col[0] for col in self.getter.description]
         data = [dict(zip(columns, row)) for row in self.getter.fetchall()]
         return data
+
+    def get_all_albums(self):
+        query = f"SELECT name, url FROM album WHERE valid = 'Y'"
+        self.getter.execute(query)
+        columns = [col[0] for col in self.getter.description]
+        data = [dict(zip(columns, row)) for row in self.getter.fetchall()]
+        return data
+
+    def get_album(self, name):
+        query = f"SELECT name, url FROM album WHERE name = '{name}' AND valid = 'Y'"
+        self.getter.execute(query)
+        columns = [col[0] for col in self.getter.description]
+        data = [dict(zip(columns, row)) for row in self.getter.fetchall()]
+        return data[0]
+
+    def is_album_exist(self, name):
+        query = f"SELECT COUNT(*) FROM album WHERE name = {name}"
+        self.getter.execute(query)
+        result = self.getter.fetchone()
+        return result[0] > 0
+
+    def insert_album(self, data):
+        name, url = data['name'], data['url']
+        query = f"INSERT INTO album (name, url, valid) VALUES ('{name}', '{url}', 'Y')"
+        self.setter.execute(query)
+        self.db.commit()
+        return True

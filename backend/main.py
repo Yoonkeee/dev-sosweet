@@ -551,3 +551,25 @@ async def reinitialize_db():
 @app.get("/api/get/logs")
 async def get_logs():
     return logs
+
+
+@app.get("/api/get/all-albums")
+async def get_albums():
+    return db_interface.get_all_albums()
+
+
+@app.get("/api/get/album/{name}")
+async def get_album(name: str):
+    return db_interface.get_album(name)
+
+
+@app.post("/api/post/album")
+async def post_album(request: DictModel):
+    # print(request)
+    data = json.loads(request.json())
+    print(*data.values())
+    response = db_interface.insert_album(*data.values())
+    if response:
+        return Response(status_code=status.HTTP_200_OK)
+    else:
+        return Response(status_code=status.HTTP_400_BAD_REQUEST)
