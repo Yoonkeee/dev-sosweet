@@ -21,6 +21,7 @@ import 프로3 from '../../public/logo/프로3.png';
 import 프로4 from '../../public/logo/프로4.png';
 import 프로5 from '../../public/logo/프로5.png';
 import 프로6 from '../../public/logo/프로6.png';
+import 프로8 from '../../public/logo/프로8.png';
 
 export const Home = () => (
   <VStack bgColor="gray.200" minH="80vh" paddingTop="2.5vh" pb={0} pt="2vh" px="2%" w="100%">
@@ -48,11 +49,11 @@ export const Home = () => (
     <HStack alignContent="center" alignItems="center" justifyContent="center" px="2%" w="100%">
       {/*  LEFT  */}
       <HomeRectBoxTwoByOne
-        bgColor="#DFFFD8"
-        image={프로1}
+        bgColor="#ffa29a"
+        image={프로8}
         letterColor={mainColor}
-        link="/history"
-        title="이용 내역"
+        link="/albums/admin"
+        title="앨범"
       />
       {/*  RIGHT  */}
       <HomeRectBoxTwoByOne
@@ -80,6 +81,19 @@ export const Home = () => (
         letterColor="white"
         link="/pay-required"
         title="결제필요"
+      />
+    </HStack>
+
+    <HStack align="center" justify="center" px="2%" w="100%">
+      <AspectRatio maxW="250px" ratio={2} rounded="1rem" w="50%">
+        <></>
+      </AspectRatio>
+      <HomeRectBoxTwoByOne
+        bgColor="#DFFFD8"
+        image={프로1}
+        letterColor={mainColor}
+        link="/history"
+        title="이용 내역"
       />
     </HStack>
   </VStack>
