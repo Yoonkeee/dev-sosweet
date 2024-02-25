@@ -313,6 +313,7 @@ export const getAllUnchecked = () =>
         counts: item.counts,
         ids: item.ids.split(','),
         remainingMinutes: item.remaining_minutes,
+        url: item.url,
       };
       return acc;
     }, {}),
