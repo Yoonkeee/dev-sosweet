@@ -22,7 +22,7 @@ const Header = () => (
     zIndex={2}
   >
     <HStack h="100%" w="100%">
-      <Text fontSize="xl" px={0} textAlign="center" w="50%">
+      <Text fontSize="xl" px={0} textAlign="center" w="35%">
         이름
       </Text>
       <Text fontSize="xl" lineHeight={1.25} px={0} textAlign="center" w="25%">
@@ -31,9 +31,12 @@ const Header = () => (
         내역
       </Text>
       <Text fontSize="xl" lineHeight={1.25} px={0} textAlign="center" w="25%">
-        잔여
+        사용
         <br />
-        시간
+        내역
+      </Text>
+      <Text fontSize="xl" lineHeight={1.25} px={0} textAlign="center" w="25%">
+        앨범
       </Text>
     </HStack>
   </Flex>

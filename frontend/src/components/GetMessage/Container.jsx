@@ -48,9 +48,15 @@ export const Container = () => {
       {data &&
         Object.entries(data)
           .sort((a, b) => Math.min(...a[1].ids.map(Number)) - Math.min(...b[1].ids.map(Number)))
-          .map(([dogName, { counts, remainingMinutes }]) => (
+          .map(([dogName, { counts, url }]) => (
             <ListContainer.Element key={dogName} onClick={() => onClick(dogName)}>
-              <GetMessageRow count={counts} name={dogName} remainingMinutes={remainingMinutes} />
+              <GetMessageRow
+                count={counts}
+                name={dogName}
+                url={url}
+                key={dogName}
+                onClick={() => onClick(dogName)}
+              />
             </ListContainer.Element>
           ))}
       {isOpen ? (
