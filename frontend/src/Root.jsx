@@ -7,15 +7,15 @@ import { convertNewlineToJSX } from '@toss/react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { getHeaderTopPosition, restartDBConnection } from './api';
-import { authenticationAtom } from './store/authentication';
-import { Authentication } from './routes';
+import { adminAuthenticationAtom } from './store/authentication';
+import { AdminAuthentication } from './routes';
 import { SkeletonContainer } from './components/Skeleton';
 import { NoticeDemo } from './modals/NoticeDemo';
 
 export const Root = () => {
   const { pathname } = useLocation();
   const div = useRef(null);
-  const isAuthorized = useRecoilValue(authenticationAtom);
+  const isAuthorized = useRecoilValue(adminAuthenticationAtom);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -72,7 +72,7 @@ export const Root = () => {
             <Footer />
           </>
         ) : (
-          <Authentication />
+          <AdminAuthentication />
         )}
       </VStack>
     </ErrorBoundary>

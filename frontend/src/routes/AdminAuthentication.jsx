@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Box, Flex, HStack, Image, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import {
-  authenticationAtom,
+  adminAuthenticationAtom,
   authFailureAtom,
   failureIntervalIdAtom,
   wrongStackAtom,
@@ -13,8 +13,8 @@ import { NumberPad } from '../components/NumberPad';
 import { PasswordInput } from '../components/PasswordInput';
 import { getDateDistance, getDateDistanceText } from '@toss/date';
 
-export const Authentication = () => {
-  const setAuthorized = useSetRecoilState(authenticationAtom);
+export const AdminAuthentication = () => {
+  const setAuthorized = useSetRecoilState(adminAuthenticationAtom);
   const [failure, setFailure] = useRecoilState(authFailureAtom);
   const [wrongStack, setWrongStack] = useRecoilState(wrongStackAtom);
   const [intervalId, setIntervalId] = useRecoilState(failureIntervalIdAtom);

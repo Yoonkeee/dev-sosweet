@@ -1,4 +1,4 @@
-export { Authentication } from './Authentication';
+export { AdminAuthentication } from './AdminAuthentication';
 export { DogsList } from './DogsList';
 export { GetMessage } from './GetMessage';
 export { History } from './History';
