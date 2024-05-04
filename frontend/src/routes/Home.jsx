@@ -13,15 +13,15 @@ import {
 import { Link, redirect } from 'react-router-dom';
 import { mainColor } from '../api';
 import ModifyDog from '../modals/ModifyDog';
-import 박프로 from '../../public/logo/박프로.webp';
-import 박하로 from '../../public/logo/박하로.webp';
-import 프로1 from '../../public/logo/프로1.png';
-import 프로2 from '../../public/logo/프로2.png';
-import 프로3 from '../../public/logo/프로3.png';
-import 프로4 from '../../public/logo/프로4.png';
-import 프로5 from '../../public/logo/프로5.png';
-import 프로6 from '../../public/logo/프로6.png';
-import 프로8 from '../../public/logo/프로8.png';
+import 박프로 from '../../public/logo/park-pro.webp';
+import 박하로 from '../../public/logo/haro.webp';
+import 프로1 from '../../public/logo/pro1.png';
+import 프로2 from '../../public/logo/pro2.png';
+import 프로3 from '../../public/logo/pro3.png';
+import 프로4 from '../../public/logo/pro4.png';
+import 프로5 from '../../public/logo/pro5.png';
+import 프로6 from '../../public/logo/pro6.png';
+import 프로8 from '../../public/logo/pro8.png';
 
 export const Home = () => (
   <VStack bgColor="gray.200" minH="80vh" paddingTop="2.5vh" pb={0} pt="2vh" px="2%" w="100%">
