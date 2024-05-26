@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "es2022",
-    "lib": ["dom", "dom.iterable"],
+    "target": "esnext",
+    "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,7 +17,13 @@
     "baseUrl": ".",
     "types": ["node"],
     "incremental": true,
+    "moduleDetection": "force",
+    "verbatimModuleSyntax": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "sourceMap": true
   },
-  "include": [ "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  // "include": ["frontend/src"],
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "**/*.js", "**/*.jsx", "*.js", "*.jsx"]
 }

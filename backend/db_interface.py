@@ -237,8 +237,12 @@ class Interface:
 
     def get_dogs_list(self):
         query = f"""
-        SELECT d.*, ifnull(SUM(p.minutes), 0) - ifnull(SUM(u.used_minutes), 0) AS remaining_minutes
+        SELECT d.*, 
+        ifnull(SUM(p.minutes), 0) - ifnull(SUM(u.used_minutes), 0) AS remaining_minutes,
+        ifnull(a.url, null) as album_url,
+        ifnull(a.shared_url, null) as shared_url
         FROM dogs d
+        LEFT JOIN album a ON d.name = a.name AND a.valid = 'Y'
         LEFT JOIN (select name, sum(minutes) as minutes from paid where valid = 'Y' group by name) p ON d.name = p.name
         LEFT JOIN (select name, sum(used_minutes) as used_minutes
         from used_table
@@ -801,10 +805,8 @@ class Interface:
         columns = [col[0] for col in self.getter.description]
         data = [dict(zip(columns, row)) for row in self.getter.fetchall()]
         name = data[0]['name']
-        all_names = [row['name'] for row in data]
-        for compare in all_names:
-            if name != compare:
-                return '다른 강아지의 이용 내역이 포함되어 있습니다.'
+        shared_url = self.get_album(name)['shared_url']
+        has_shared_url = True if shared_url else False
 
         official_name = self.get_official_name(name)
         remaining_minutes = self.get_remaining_minutes(name, message=True)
@@ -855,6 +857,9 @@ class Interface:
         if remaining_minutes < 0:
             message += f'다음에 오시면 충전부탁드려요~ \n'
         message += f'감사합니다🐶❤ \n'
+        if has_shared_url:
+            message += f'\n앞으로 사진 공유는 아래 링크로 확인해주세요~\n{shared_url}\n'
+        
         # print(message)
         return message
 
@@ -978,7 +983,7 @@ class Interface:
 
     def get_album(self, name):
         try:
-            query = f"SELECT name, url FROM album WHERE name = '{name}' AND valid = 'Y'"
+            query = f"SELECT name, shared_url FROM album WHERE name = '{name}' AND valid = 'Y'"
             self.getter.execute(query)
             columns = [col[0] for col in self.getter.description]
             data = [dict(zip(columns, row)) for row in self.getter.fetchall()]
@@ -988,18 +993,18 @@ class Interface:
             return False
 
     def is_album_exist(self, name):
-        query = f"SELECT COUNT(*) FROM album WHERE name = {name}"
+        query = f"SELECT COUNT(*) FROM album WHERE name = '{name}'"
         self.getter.execute(query)
         result = self.getter.fetchone()
 
         return result[0] > 0
 
     def insert_album(self, data):
-        name, url = data['name'], data['url']
+        name, url, shared_url = data['name'], data['url'], data['shared_url']
         if self.is_album_exist(name):
-            query = f"UPDATE album SET url = '{url}', valid = 'Y' WHERE name = '{name}'"
+            query = f"UPDATE album SET url = '{url}', shared_url = '{shared_url}', valid = 'Y' WHERE name = '{name}'"
         else:
-            query = f"INSERT INTO album (name, url, valid) VALUES ('{name}', '{url}', 'Y')"
+            query = f"INSERT INTO album (name, url, shared_url, valid) VALUES ('{name}', '{url}', '{shared_url}', 'Y')"
         self.setter.execute(query)
         self.db.commit()
 

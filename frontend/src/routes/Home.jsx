@@ -52,7 +52,7 @@ export const Home = () => (
         bgColor="#ffa29a"
         image={프로8}
         letterColor={mainColor}
-        link="/albums/admin"
+        link="/albums"
         title="앨범"
       />
       {/*  RIGHT  */}

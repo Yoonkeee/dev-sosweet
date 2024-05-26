@@ -21,7 +21,6 @@ import logging
 from dotenv import dotenv_values
 from collections import deque
 
-
 # load env variables. This replaces environ.
 # load_dotenv()
 env = dotenv_values(".env")
@@ -120,14 +119,15 @@ for h in range(0, 24):
     for m in [16, 33, 48, 56]:
         scheduler.add_job(execute_keep_alive, 'cron', hour=h, minute=m, timezone=tz)
 #     for m in range(0, 60):
-    # for m in [13, 28, 43, 58]:
+# for m in [13, 28, 43, 58]:
 # for h in range(0, 24):
 #     scheduler.add_job(clone_to_replica, 'cron', hour=h, minute=8, timezone=tz)
-    # for m in range(0, 60):
-    # for m in [6, 26, 46]:
+# for m in range(0, 60):
+# for m in [6, 26, 46]:
 
 # scheduler.add_job(set_backup, 'interval', hours=12, next_run_time=datetime.now(tz) + timedelta(minutes=1))
 scheduler.start()
+
 
 # db_interface.clone_to_replica()
 
@@ -286,7 +286,7 @@ async def check_out(request: DictModel):
     return {"message": "check-out"}
 
 
-#get_used_row_info
+# get_used_row_info
 @app.get("/api/get/used-row-info/{row_id}")
 async def get_used_row_info(row_id: int):
     print('in get_used_row_info')
@@ -572,9 +572,22 @@ async def get_album(name: str):
 async def post_album(request: DictModel):
     # print(request)
     data = json.loads(request.json())
-    print(*data.values())
+    print(f'in post_album print data {data}')
     response = db_interface.insert_album(*data.values())
     if response:
         return Response(status_code=status.HTTP_200_OK)
     else:
         return Response(status_code=status.HTTP_400_BAD_REQUEST)
+
+# @app.post("/api/post/google/oauth-code")
+# async def google_oauth_code(code: str):
+#
+#     # url = f'https://api.cloudflare.com/client/v4/accounts/{CF_ID}/images/v1'
+#     url = f"https://api.cloudflare.com/client/v4/accounts/{CF_ID}/images/v2/direct_upload"
+#     one_time_url = requests.post(
+#         url, headers={"Authorization": f"Bearer {CF_TOKEN}"}
+#     )
+#     # return one_time_url
+#     one_time_url = one_time_url.json()
+#     result = one_time_url.get("result")
+#     return result

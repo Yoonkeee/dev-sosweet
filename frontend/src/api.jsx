@@ -1,11 +1,12 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Temporal } from '@js-temporal/polyfill';
-import { getViewportSize, isMobileWeb } from '@toss/utils';
+import { createQueryString, createSearchParamString, getViewportSize, isMobileWeb } from '@toss/utils';
 import { useRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import _ from 'lodash';
 import { isNarrowAtom } from './store/store';
+import { jwtDecode } from 'jwt-decode';
 
 const instance = axios.create({
   baseURL: '/api',
@@ -460,3 +461,108 @@ export const useIsNarrow = () => {
 };
 
 export const restartDBConnection = () => instance.get(`/get/restart-db-connection`);
+
+export const insertAlbumUrl = data =>
+  // console.log('in api insertAlbumUrl');
+  instance
+    .post(
+      '/post/album',
+      { data },
+      {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken') || '',
+        },
+      },
+    )
+    .then(response => response.data);
+
+const googleOAuthInstance = axios.create({
+  baseURL: '/google-oauth',
+});
+
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = import.meta.env.VITE_GOOGLE_CLIENT_SECRET;
+
+export const getGoogleAccessToken = async code => {
+  const params = {
+    code,
+    client_id: GOOGLE_CLIENT_ID,
+    client_secret: GOOGLE_CLIENT_SECRET,
+    redirect_uri: 'http://localhost:5173',
+    response_type: 'token',
+    grant_type: 'authorization_code',
+  };
+  const result = await googleOAuthInstance.post(`/token`, createSearchParamString(params), {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+
+  if (result.statusText === 'OK') return result.data;
+};
+
+const googlePhotoInstance = axios.create({
+  baseURL: '/google-photo',
+});
+export const makeAlbumAtGooglePhotos = async ({ name, accessToken }) => {
+  const data = {
+    album: {
+      title: name,
+    },
+  };
+  const createResult = await googlePhotoInstance.post(`/albums`, data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  console.log(createResult);
+
+  const albumId = createResult.data.id;
+  const shareResult = await googlePhotoInstance.post(
+    `/albums/${albumId}:share`,
+    {
+      sharedAlbumOptions: {
+        isCollaborative: false,
+        isCommentable: false,
+      },
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+
+  console.log(shareResult);
+
+  const res = {
+    name: name,
+    url: createResult.data.productUrl,
+    shared_url: shareResult.data.shareInfo.shareableUrl,
+  };
+
+  console.log(res);
+
+  return res;
+};
+
+export const verifyGoogleToken = async token => {
+  try {
+    const response = await axios.get(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token}`);
+    return response.status === 200;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const getAllAlbums = () =>
+  instance.get('/get/all-albums').then(response =>
+    response.data.reduce((acc, album) => {
+      acc[album.name] = album.url;
+      return acc;
+    }, {}),
+  );

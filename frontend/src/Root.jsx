@@ -26,15 +26,15 @@ export const Root = () => {
   return (
     <ErrorBoundary
       renderFallback={() => {
+        navigate('/on-error');
         restartDBConnection();
         toast({
-          title: convertNewlineToJSX('에러가 발생해서 서버를 재시작할게요.\n다시 시도해주세요.'),
+          title: convertNewlineToJSX('에러가 발생했어요.\n다시 시도해주세요.'),
           status: 'error',
           position: 'top',
           duration: 3000,
           isClosable: true,
         });
-        navigate('/on-error');
       }}
       resetKeys={[pathname]}
     >
@@ -52,7 +52,7 @@ export const Root = () => {
             'GmarketSans, Pretendard, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol',
         }}
       >
-        <NoticeDemo />
+        {!import.meta.env.DEV && <NoticeDemo />}
         {isAuthorized ? (
           <>
             <Header />

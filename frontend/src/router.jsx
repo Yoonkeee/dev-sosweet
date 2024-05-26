@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         element: <PayRequired />,
       },
       {
-        path: 'albums/admin',
+        path: 'albums',
         element: <AlbumList />,
       },
     ],
