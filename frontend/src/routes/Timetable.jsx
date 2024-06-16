@@ -5,7 +5,7 @@ import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { Container } from '../components/Timetable';
 import { DateController } from '../components/DateController';
 import { currentDateState, setNextDateState, setPrevDateState } from '../store/store';
-import { getHeaderTopPosition, notOutTimetable, strToLocaleWithoutWeekday } from '../api';
+import { getHeaderTopPosition, notOutTimetable, strToLocaleWithoutWeekday, testMockApi } from '../api';
 import { SkeletonContainer } from '../components/Skeleton';
 
 export const Timetable = () => {
@@ -60,6 +60,8 @@ export const Timetable = () => {
   useEffect(() => {
     createNotOutDogsToast();
   }, [notOutData]);
+
+  testMockApi().then(data => console.log(data));
 
   return (
     <VStack bgColor="white" minH="80vh" w="100%">

@@ -6,7 +6,7 @@ import { ErrorBoundary } from '@toss/error-boundary';
 import { convertNewlineToJSX } from '@toss/react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { getHeaderTopPosition, restartDBConnection } from './api';
+import { getHeaderTopPosition, restartDBConnection, testMockApi } from './api';
 import { adminAuthenticationAtom } from './store/authentication';
 import { AdminAuthentication } from './routes';
 import { SkeletonContainer } from './components/Skeleton';

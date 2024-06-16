@@ -566,3 +566,10 @@ export const getAllAlbums = () =>
       return acc;
     }, {}),
   );
+
+const mockBaseUrl = '/mocks';
+const mockInstance = axios.create({
+  baseURL: mockBaseUrl,
+});
+
+export const testMockApi = () => mockInstance.get('/inventory/list').then(response => response.data);

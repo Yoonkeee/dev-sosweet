@@ -3,11 +3,11 @@ import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
   plugins: [react()],
-  publicDir: '/public',
+  publicDir: 'public',
   server: {
     proxy: {
-      '/api': { target: 'http://127.0.0.1:8000', changeOrigin: true }, // Local Server
-      // '/api': { target: 'http://211.250.82.235:55000', changeOrigin: true }, // Dev Server
+      // '/api': { target: 'http://127.0.0.1:8000', changeOrigin: true }, // Local Server
+      '/api': { target: 'http://211.250.82.235:55000', changeOrigin: true }, // Dev Server
       '/google-oauth': {
         target: 'https://oauth2.googleapis.com',
         // target: 'https://accounts.google.com',
