@@ -1,5 +1,7 @@
+import type { ProductBase } from 'src/types/product';
+
 export type Stock = {
-  productId: number;
+  product: StockProductInfo;
   id: number;
   validDate?: number;
   stockDate: number;
@@ -7,10 +9,23 @@ export type Stock = {
   stockQuantity: number;
 };
 
+export type StockProductInfo = ProductBase & {
+  isValidDate: boolean;
+  defaultPrice: number;
+};
+
+// 입고 등록 api request 타입
+export type NewStockData = Omit<Stock, 'id' | 'product'> & { productId: StockProductInfo['id'] };
+
 export type SaleInfo = {
-  stockItem: Stock;
+  stockItem: SaleStockInfo;
   id: number;
   saleDate: number;
   salePrice: number;
   saleQuantity: number;
 };
+
+export type SaleStockInfo = {
+  stockId: Stock['id'];
+  productId: ProductBase['id'];
+} & Omit<ProductBase, 'id'>;
