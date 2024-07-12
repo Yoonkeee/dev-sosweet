@@ -1,42 +1,118 @@
 import { rest } from 'msw';
-
-// msw 공식 docs
-// https://v1.mswjs.io/
+import type { ProductWithoutSalesRecord, ProductWithSalesRecord, SaleInfo, Stock } from 'src/types/dto';
+import { product, productList } from '../src/mocks/product';
+import { salesHistory, stockItem, stockList } from '../src/mocks/sale';
 
 const baseUrl = '/mocks';
 
-type InventoryListExampleType = {
-  items: {
-    id: number;
-    name: string;
-  }[];
-};
-
-const inventoryListExample: InventoryListExampleType = {
-  items: [
-    { id: 1, name: 'Item 1' },
-    { id: 2, name: 'Item 2' },
-  ],
-};
-
 export const handlers = [
-  rest.get(`${baseUrl}/inventory/example`, (req, res, ctx) =>
+  // 상품 리스트 조회
+  rest.get(`${baseUrl}/get/product-list`, (req, res, ctx) =>
+    res(ctx.status(200), ctx.json<ProductWithSalesRecord[]>(productList)),
+  ),
+
+  // 상품 추가
+  rest.post(`${baseUrl}/post/add-new-product`, async (req, res, ctx) =>
     res(
+      ctx.status(200),
       ctx.json({
-        message: 'example',
+        message: '상품 추가 성공!',
       }),
     ),
   ),
 
-  rest.post(`${baseUrl}/inventory/example`, (req, res, ctx) =>
+  // 개별 상품 조회
+  rest.get(`${baseUrl}/get/product-list/:id`, (req, res, ctx) =>
+    res(ctx.status(200), ctx.json<ProductWithoutSalesRecord>(product)),
+  ),
+
+  // 상품 수정
+  rest.post(`${baseUrl}/post/mod-product/:id`, async (req, res, ctx) =>
     res(
+      ctx.status(200),
       ctx.json({
-        message: 'post via msw is successful',
+        message: '상품 수정 성공!',
       }),
     ),
   ),
 
-  rest.get(`${baseUrl}/inventory/list`, (req, res, ctx) =>
-    res(ctx.status(200), ctx.json<InventoryListExampleType>(inventoryListExample)),
+  // 상품 삭제
+  rest.get(`${baseUrl}/get/cancel-product/:id`, (req, res, ctx) =>
+    res(ctx.status(200), ctx.json({ message: '상품 정보 삭제!' })),
+  ),
+
+  // 입고 상품 등록
+  rest.post(`${baseUrl}/post/add-new-stock`, async (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        message: '입고 등록 성공!',
+      }),
+    ),
+  ),
+
+  // 입고 등록된 상품 갯수 증가
+  rest.post(`${baseUrl}/post/update-receive-count/:id`, async (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        message: '상품 수정 성공!',
+      }),
+    ),
+  ),
+
+  // 입고 상품 리스트 조회
+  rest.get(`${baseUrl}/get/stock-list`, (req, res, ctx) =>
+    res(ctx.status(200), ctx.json<Stock[]>(stockList)),
+  ),
+
+  // 입고 상품 조회
+  rest.get(`${baseUrl}/get/stock-list/:id`, (req, res, ctx) =>
+    res(ctx.status(200), ctx.json<Stock>(stockItem)),
+  ),
+
+  // 입고 정보 수정
+  rest.post(`${baseUrl}/post/mod-stock/:id`, async (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        message: '입고 상품 수정 성공!',
+      }),
+    ),
+  ),
+
+  // 판매 등록
+  rest.post(`${baseUrl}/post/register-sale`, async (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        message: '판매 등록 성공!',
+      }),
+    ),
+  ),
+
+  // 판매 내역 조회
+  rest.get(`${baseUrl}/get/sales-history`, (req, res, ctx) =>
+    res(ctx.status(200), ctx.json<SaleInfo[]>(salesHistory)),
+  ),
+
+  // 반품 등록
+  rest.post(`${baseUrl}/post/cancel-sale/:id`, async (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        message: '반품 등록 성공!',
+      }),
+    ),
+  ),
+
+  // 상품 누적 판매 정보 수정
+  rest.post(`${baseUrl}/post/mod-sale-info/:id`, async (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        message: '누적 판매 정보(매출/수량) 수정! 성공!',
+      }),
+    ),
   ),
 ];
