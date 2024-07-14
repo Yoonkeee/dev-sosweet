@@ -7,4 +7,5 @@ export { Hotelling } from './Hotelling';
 export { NotFound } from './NotFound';
 export { PayHistory } from './PayHistory';
 export { PayRequired } from './PayRequired';
+export { Product } from './Product';
 export { Timetable } from './Timetable';
