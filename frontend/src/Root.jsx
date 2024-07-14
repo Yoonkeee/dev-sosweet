@@ -1,16 +1,17 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Box, useToast, VStack } from '@chakra-ui/react';
-import { Suspense, useEffect, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
+import { Box, VStack, useToast } from '@chakra-ui/react';
 import { ErrorBoundary } from '@toss/error-boundary';
 import { convertNewlineToJSX } from '@toss/react';
-import { Header } from './components/Header';
+import { Suspense, useEffect, useRef } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { getHeaderTopPosition, restartDBConnection } from './api';
 import { Footer } from './components/Footer';
-import { getHeaderTopPosition, restartDBConnection, testMockApi } from './api';
-import { adminAuthenticationAtom } from './store/authentication';
-import { AdminAuthentication } from './routes';
+import { Header } from './components/Header';
 import { SkeletonContainer } from './components/Skeleton';
+import { ProductFooter } from './components/SubFooter/ProductFooter';
 import { NoticeDemo } from './modals/NoticeDemo';
+import { AdminAuthentication } from './routes';
+import { adminAuthenticationAtom } from './store/authentication';
 
 export const Root = () => {
   const { pathname } = useLocation();
@@ -22,6 +23,12 @@ export const Root = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  const footerMap = {
+    '/product': ProductFooter,
+  };
+
+  const RenderFooter = footerMap[pathname] || Footer;
 
   return (
     <ErrorBoundary
@@ -69,7 +76,7 @@ export const Root = () => {
                 <Box h="10vh" w="100%" />
               </Suspense>
             </VStack>
-            <Footer />
+            <RenderFooter />
           </>
         ) : (
           <AdminAuthentication />
