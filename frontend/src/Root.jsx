@@ -5,10 +5,9 @@ import { Suspense, useEffect, useRef } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { getHeaderTopPosition, restartDBConnection } from './api';
-import { Footer } from './components/Footer';
+import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header';
 import { SkeletonContainer } from './components/Skeleton';
-import { ProductFooter } from './components/SubFooter/ProductFooter';
 import { NoticeDemo } from './modals/NoticeDemo';
 import { AdminAuthentication } from './routes';
 import { adminAuthenticationAtom } from './store/authentication';
@@ -23,12 +22,6 @@ export const Root = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
-  const footerMap = {
-    '/product': ProductFooter,
-  };
-
-  const RenderFooter = footerMap[pathname] || Footer;
 
   return (
     <ErrorBoundary
@@ -76,7 +69,7 @@ export const Root = () => {
                 <Box h="10vh" w="100%" />
               </Suspense>
             </VStack>
-            <RenderFooter />
+            <Footer />
           </>
         ) : (
           <AdminAuthentication />
