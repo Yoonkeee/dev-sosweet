@@ -1,17 +1,16 @@
 import type { ComponentType } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Default as DefaultFooter } from './Default';
+import { HomeFooter, ProductFooter } from './FooterContent';
 import { FooterBody } from './FooterTemplate';
-import { Product as ProductFooter } from './Product';
 
 const footerComponentMap: Record<string, ComponentType> = {
-  '/': DefaultFooter,
+  '/': HomeFooter,
   '/product': ProductFooter,
 };
 
 export const Footer = () => {
   const { pathname } = useLocation();
-  const FooterContent = footerComponentMap[pathname] || DefaultFooter;
+  const FooterContent = footerComponentMap[pathname] || HomeFooter;
 
   return (
     <FooterBody>
