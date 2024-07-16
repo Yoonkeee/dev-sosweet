@@ -5,7 +5,7 @@ import { Suspense, useEffect, useRef } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { getHeaderTopPosition, restartDBConnection } from './api';
-import { Footer } from './components/Footer/Footer';
+import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { SkeletonContainer } from './components/Skeleton';
 import { NoticeDemo } from './modals/NoticeDemo';
