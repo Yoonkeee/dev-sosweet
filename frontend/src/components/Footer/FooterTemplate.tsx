@@ -44,6 +44,7 @@ type FooterButtonProps = {
   svg: string;
   text: string;
 };
+
 export const FooterButton = ({ onClick, svg, text }: FooterButtonProps) => (
   <Button aspectRatio={1} bgColor="transparent" h="100%" onClick={onClick} paddingTop="10px">
     <VStack gap="0.3rem" h="100%" m={0} p={0} w="100%">
@@ -59,11 +60,13 @@ type FooterModalProps = {
   isOpen: boolean;
   onClose: VoidFunction;
 };
+
 const modal: Record<string, ComponentType<FooterModalProps>> = {
   AddPay,
   Checkin,
   NewDog,
 };
+
 export const FooterModal = ({ name, onClose }: { name: string; onClose: VoidFunction }) => {
   const ModalComponent = modal[name] ?? null;
 
