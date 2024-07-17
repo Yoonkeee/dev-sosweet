@@ -1,20 +1,20 @@
-import type { ComponentType } from 'react';
 import { useLocation } from 'react-router-dom';
-import { HomeFooter, ProductFooter } from './FooterContent';
-import { FooterBody } from './FooterTemplate';
+import { Home, Product } from './FooterContent';
 
-const footerComponentMap: Record<string, ComponentType> = {
-  '/': HomeFooter,
-  '/product': ProductFooter,
+type FooterProps = {
+  footers: {
+    [key: string]: React.ComponentType;
+  };
 };
 
-export const Footer = () => {
+export const Footer = ({ footers }: FooterProps) => {
   const { pathname } = useLocation();
-  const FooterContent = footerComponentMap[pathname] || HomeFooter;
+  const FooterContent = footers[pathname] || null;
 
-  return (
-    <FooterBody>
-      <FooterContent />
-    </FooterBody>
-  );
+  if (!FooterContent) return null;
+
+  return <FooterContent />;
 };
+
+Footer.Home = Home;
+Footer.Product = Product;
