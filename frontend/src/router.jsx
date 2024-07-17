@@ -1,15 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Root } from './Root';
 import {
-  PayRequired,
-  Home,
-  History,
-  PayHistory,
   DogsList,
+  GetMessage,
+  History,
+  Home,
   Hotelling,
   NotFound,
+  PayHistory,
+  PayRequired,
+  Product,
   Timetable,
-  GetMessage,
 } from './routes';
 import { AlbumList } from './routes/AlbumList';
 
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
         path: 'albums',
         element: <AlbumList />,
       },
+      { path: 'product', element: <Product /> },
     ],
   },
 ]);
