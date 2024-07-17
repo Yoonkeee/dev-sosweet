@@ -1,11 +1,11 @@
 import { Flex, Image, Link as StyledLink } from '@chakra-ui/react';
 import { Link as RouterDomLink, useNavigate } from 'react-router-dom';
-import { FooterButton } from '../FooterTemplate';
+import { FooterBody, FooterButton } from '../FooterTemplate';
 
 export const Product = () => {
   const navigate = useNavigate();
   return (
-    <>
+    <FooterBody>
       <FooterButton onClick={() => navigate('/sales')} svg="/icons/Sale.svg" text="판매" />
       <Flex alignContent="flex-start" aspectRatio={1} h="100%" justifyContent="center">
         <StyledLink alignItems="flex-start" as={RouterDomLink} to="/">
@@ -19,6 +19,6 @@ export const Product = () => {
         svg="/icons/AddIcon.svg"
         text="상품추가"
       />
-    </>
+    </FooterBody>
   );
 };

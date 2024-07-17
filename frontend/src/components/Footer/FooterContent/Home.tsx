@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Link as RouterDomLink, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { setTodayState } from '../../../store/store';
-import { FooterButton, FooterModal } from '../FooterTemplate';
+import { FooterBody, FooterButton, FooterModal } from '../FooterTemplate';
 
 export const Home = () => {
   const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ export const Home = () => {
   };
 
   return (
-    <>
+    <FooterBody>
       <FooterButton
         onClick={() => {
           setModalName('NewDog');
@@ -50,6 +50,6 @@ export const Home = () => {
         text="체크인"
       />
       <FooterModal name={modalName} onClose={onClose} />
-    </>
+    </FooterBody>
   );
 };
