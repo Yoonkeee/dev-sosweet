@@ -8,7 +8,7 @@ import { getProductList } from '../mockApi';
 
 export const Product = () => {
   const productList = useSuspenseQuery({
-    queryKey: ['product-list'],
+    queryKey: ['productList'],
     queryFn: getProductList,
   }).data;
   return (
