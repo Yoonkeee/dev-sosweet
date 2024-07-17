@@ -1,2 +1,2 @@
-export { Home as HomeFooter } from './Home';
-export { Product as ProductFooter } from './Product';
+export { Home } from './Home';
+export { Product } from './Product';
