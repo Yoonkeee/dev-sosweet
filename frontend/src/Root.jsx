@@ -76,7 +76,12 @@ export const Root = () => {
                 <Box h="10vh" w="100%" />
               </Suspense>
             </VStack>
-            <RenderFooter />
+            <Footer
+              footers={{
+                '/': Footer.Home,
+                '/product': Footer.Product,
+              }}
+            />
           </>
         ) : (
           <AdminAuthentication />

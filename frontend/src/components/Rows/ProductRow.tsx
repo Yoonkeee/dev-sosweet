@@ -18,7 +18,7 @@ const ProductRow = ({ productInfo }: Props) => {
         <Text
           cursor="pointer"
           onClick={() => {
-            console.log('상품정보');
+            // TODO: 상품 정보 모달 열기 로직 연결
           }}
         >
           {name} ({formattedPrice})
@@ -40,6 +40,7 @@ const ProductRow = ({ productInfo }: Props) => {
           colorScheme="twitter"
           onClick={() => {
             console.log('입고');
+            // TODO: 입고 등록 모달 열기 로직 연결
           }}
           rounded="xl"
         >

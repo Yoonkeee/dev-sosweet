@@ -18,6 +18,14 @@ export const Product = () => {
     </ListContainer>
   );
 };
+import { productList as mockProductList } from '../mocks/product';
+
+export const Product = () => (
+  <ListContainer>
+    <Header />
+    <ProductList productList={mockProductList} />
+  </ListContainer>
+);
 
 const Header = () => (
   <Flex
