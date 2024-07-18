@@ -8,6 +8,7 @@ import { getHeaderTopPosition, restartDBConnection } from './api';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { SkeletonContainer } from './components/Skeleton';
+import { ProductFooter } from './components/SubFooter/ProductFooter';
 import { NoticeDemo } from './modals/NoticeDemo';
 import { AdminAuthentication } from './routes';
 import { adminAuthenticationAtom } from './store/authentication';
@@ -22,6 +23,12 @@ export const Root = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  const footerMap = {
+    '/product': ProductFooter,
+  };
+
+  const RenderFooter = footerMap[pathname] || Footer;
 
   return (
     <ErrorBoundary

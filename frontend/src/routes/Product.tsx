@@ -1,16 +1,23 @@
 import { Flex, HStack, Text } from '@chakra-ui/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import type { ProductWithSalesRecord } from 'src/types/dto';
 import { getHeaderTopPosition } from '../api';
 import { ListContainer, ListElement } from '../components/List';
 import ProductRow from '../components/Rows/ProductRow';
-import { productList as mockProductList } from '../mocks/product';
+import { getProductList } from '../mockApi';
 
-export const Product = () => (
-  <ListContainer>
-    <Header />
-    <ProductList productList={mockProductList} />
-  </ListContainer>
-);
+export const Product = () => {
+  const productList = useSuspenseQuery({
+    queryKey: ['productList'],
+    queryFn: getProductList,
+  }).data;
+  return (
+    <ListContainer>
+      <Header />
+      <ProductList productList={productList} />
+    </ListContainer>
+  );
+};
 
 const Header = () => (
   <Flex
