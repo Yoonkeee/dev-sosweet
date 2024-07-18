@@ -39,6 +39,7 @@ const ProductRow = ({ productInfo }: Props) => {
           }}
           colorScheme="twitter"
           onClick={() => {
+            console.log('입고');
             // TODO: 입고 등록 모달 열기 로직 연결
           }}
           rounded="xl"
