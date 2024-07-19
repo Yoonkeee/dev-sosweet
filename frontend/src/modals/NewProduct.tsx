@@ -16,6 +16,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { CATEGORIES } from 'src/modals/consts';
 import type { Category } from 'src/types/dto';
 import type { ModalProps } from '../modals';
 
@@ -27,8 +28,6 @@ type FormValue = {
   productImage: string | null;
   vendor: string | null;
 };
-
-const categorys: Category[] = ['간식', '잡화'];
 
 const NewProduct = ({ isOpen, onClose }: ModalProps) => {
   const { handleSubmit, register } = useForm<FormValue>();
@@ -79,7 +78,7 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
                 {...register('category')}
                 id="name"
               >
-                {categorys.map(name => (
+                {CATEGORIES.map(name => (
                   <option key={name} value={name}>
                     {name}
                   </option>
