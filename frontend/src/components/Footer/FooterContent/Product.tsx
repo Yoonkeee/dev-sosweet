@@ -14,7 +14,7 @@ export const Product = () => {
           <Image h="90%" src="/logo/logo_dog_btn.png" />
         </StyledLink>
       </Flex>
-      <FooterButton onClick={() => onOpen()} svg="/icons/AddIcon.svg" text="상품추가" />
+      <FooterButton onClick={onOpen} svg="/icons/AddIcon.svg" text="상품추가" />
       {isOpen && <FooterModal name="NewProduct" onClose={onClose} />}
     </FooterBody>
   );
