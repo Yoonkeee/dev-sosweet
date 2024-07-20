@@ -16,9 +16,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { CATEGORIES } from 'src/modals/consts';
+import { useRecoilValue } from 'recoil';
 import type { Category } from 'src/types/dto';
 import type { ModalProps } from '../modals';
+import { CATEGORIES } from '../modals/consts';
+import { productNameListState } from '../store/product';
 
 type FormValue = {
   category: Category;
@@ -30,10 +32,19 @@ type FormValue = {
 };
 
 const NewProduct = ({ isOpen, onClose }: ModalProps) => {
-  const { handleSubmit, register } = useForm<FormValue>();
+  const productNameList = useRecoilValue(productNameListState);
+
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm<FormValue>({
+    mode: 'onChange',
+  });
 
   const onSubmit: SubmitHandler<FormValue> = data => {
     // TODO: Issue-#12에서 상품 추가 API 연결
+    onClose();
   };
 
   return (
@@ -89,11 +100,42 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
             </HStack>
             <HStack w="100%">
               <Text minW="20%">상품명</Text>
-              <Input placeholder="상품명(필수)" variant="filled" {...register('name')} />
+              <Input
+                placeholder="상품명(필수)"
+                variant="filled"
+                {...register('name', {
+                  required: true,
+                  validate: value => !productNameList.includes(value) || '이미 존재하는 상품명이에요 🫢',
+                })}
+              />
+            </HStack>
+            <HStack>
+              {errors.name && (
+                <Text color="#ff5050" fontSize="16px">
+                  {errors.name.message}
+                </Text>
+              )}
             </HStack>
             <HStack w="100%">
               <Text minW="20%">판매가</Text>
-              <Input placeholder="판매가(필수)" variant="filled" {...register('defaultPrice')} />
+              <Input
+                placeholder="판매가(필수)"
+                variant="filled"
+                {...register('defaultPrice', {
+                  required: true,
+                  pattern: {
+                    value: /^\d+$/,
+                    message: '숫자만 입력 가능해요 👀',
+                  },
+                })}
+              />
+            </HStack>
+            <HStack w="100%">
+              {errors.defaultPrice && (
+                <Text color="#ff5050" fontSize="16px" ml="23%">
+                  {errors.defaultPrice.message}
+                </Text>
+              )}
             </HStack>
             <HStack w="100%">
               <Text minW="20%">거래처</Text>
