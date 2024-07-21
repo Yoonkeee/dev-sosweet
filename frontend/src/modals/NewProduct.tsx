@@ -15,6 +15,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import { some } from 'lodash';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import type { Category } from 'src/types/dto';
@@ -105,7 +106,8 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
                 variant="filled"
                 {...register('name', {
                   required: true,
-                  validate: value => !productNameList.includes(value) || '이미 존재하는 상품명이에요 🫢',
+                  validate: value =>
+                    !some(productNameList, name => name === value) || '이미 존재하는 상품명이에요 🫢',
                 })}
               />
             </HStack>
