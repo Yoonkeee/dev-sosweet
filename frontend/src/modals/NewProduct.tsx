@@ -109,7 +109,6 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
                 color="white"
                 padding="8px"
                 placement="bottom-start"
-                closeDelay={200}
               >
                 <Input
                   placeholder="상품명(필수)"
