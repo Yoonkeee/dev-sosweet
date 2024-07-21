@@ -121,23 +121,17 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
             <HStack w="100%">
               <Text minW="20%">판매가</Text>
               <Input
-                placeholder="판매가(필수)"
+                type="number"
+                placeholder="판매가(필수) - 숫자만 입력할 수 있어요."
                 variant="filled"
                 {...register('defaultPrice', {
                   required: true,
-                  pattern: {
-                    value: /^\d+$/,
-                    message: '숫자만 입력 가능해요 👀',
-                  },
                 })}
+                style={{
+                  border: errors.defaultPrice ? '2px solid red' : '',
+                }}
+                required
               />
-            </HStack>
-            <HStack w="100%">
-              {errors.defaultPrice && (
-                <Text color="#ff5050" fontSize="16px" ml="23%">
-                  {errors.defaultPrice.message}
-                </Text>
-              )}
             </HStack>
             <HStack w="100%">
               <Text minW="20%">거래처</Text>
