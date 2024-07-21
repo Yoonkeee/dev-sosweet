@@ -79,17 +79,13 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
                 </Flex>
               </Flex>
               <Select
-                css={{ WebkitPaddingEnd: 0, WebkitPaddingStart: 10 }}
-                icon={<></>}
-                paddingInlineEnd={0}
-                paddingInlineStart={0}
-                placeholder="카테고리 선택"
-                position="inherit"
-                px={0}
-                required
+                id="category"
                 w="40%"
-                {...register('category')}
-                id="name"
+                placeholder="카테고리(필수)"
+                {...register('category', { required: true })}
+                style={{
+                  border: errors.category ? '2px solid red' : '',
+                }}
               >
                 {CATEGORIES.map(name => (
                   <option key={name} value={name}>
@@ -121,7 +117,6 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
                   style={{
                     border: errors.name ? '2px solid red' : '',
                   }}
-                  required
                 />
               </Tooltip>
             </HStack>
@@ -137,7 +132,6 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
                 style={{
                   border: errors.defaultPrice ? '2px solid red' : '',
                 }}
-                required
               />
             </HStack>
             <HStack w="100%">
