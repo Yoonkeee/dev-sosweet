@@ -1,16 +1,26 @@
 import { Flex, HStack, Text } from '@chakra-ui/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
 import type { ProductWithSalesRecord } from 'src/types/dto';
 import { getHeaderTopPosition } from '../api';
 import { ListContainer, ListElement } from '../components/List';
 import ProductRow from '../components/Rows/ProductRow';
 import { getProductList } from '../mockApi';
+import { productNameListState } from '../store/product';
 
 export const Product = () => {
   const productList = useSuspenseQuery({
     queryKey: ['productList'],
     queryFn: getProductList,
   }).data;
+
+  const setProductNameList = useSetRecoilState<string[]>(productNameListState);
+
+  useEffect(() => {
+    setProductNameList(productList.map(product => product.name));
+  }, [productList]);
+
   return (
     <ListContainer>
       <Header />
