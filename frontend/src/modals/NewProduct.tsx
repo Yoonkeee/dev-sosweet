@@ -14,6 +14,7 @@ import {
   Switch,
   Text,
   Tooltip,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
@@ -37,10 +38,20 @@ type FormValue = {
 
 const NewProduct = ({ isOpen, onClose }: ModalProps) => {
   const productNameList = useRecoilValue(productNameListState);
+  const toast = useToast();
 
   const { mutate } = useMutation({
     mutationFn: addNewProduct,
-    onSuccess: result => onClose(),
+    onSuccess: () => {
+      toast({
+        title: '상품 추가에 성공했어요 🎉',
+        status: 'success',
+        position: 'top',
+        duration: 1000,
+        isClosable: true,
+      });
+      onClose();
+    },
   });
 
   const {
