@@ -17,7 +17,7 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { some } from 'lodash';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
@@ -40,6 +40,7 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
   const productNameList = useRecoilValue(productNameListState);
   const toast = useToast();
 
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: addNewProduct,
     onSuccess: () => {
@@ -50,10 +51,10 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
         duration: 1000,
         isClosable: true,
       });
+      queryClient.refetchQueries({ queryKey: ['productList'] });
       onClose();
     },
   });
-
   const {
     formState: { errors },
     handleSubmit,
