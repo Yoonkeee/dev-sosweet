@@ -14,12 +14,15 @@ import {
   Switch,
   Text,
   Tooltip,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { some } from 'lodash';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import type { Category } from 'src/types/dto';
+import { addNewProduct } from '../mockApi';
 import type { ModalProps } from '../modals';
 import { CATEGORIES } from '../modals/consts';
 import { productNameListState } from '../store/product';
@@ -35,7 +38,23 @@ type FormValue = {
 
 const NewProduct = ({ isOpen, onClose }: ModalProps) => {
   const productNameList = useRecoilValue(productNameListState);
+  const toast = useToast();
 
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: addNewProduct,
+    onSuccess: () => {
+      toast({
+        title: '상품 추가에 성공했어요 🎉',
+        status: 'success',
+        position: 'top',
+        duration: 1000,
+        isClosable: true,
+      });
+      queryClient.refetchQueries({ queryKey: ['productList'] });
+      onClose();
+    },
+  });
   const {
     formState: { errors },
     handleSubmit,
@@ -45,7 +64,11 @@ const NewProduct = ({ isOpen, onClose }: ModalProps) => {
   });
 
   const onSubmit: SubmitHandler<FormValue> = data => {
-    // TODO: Issue-#12에서 상품 추가 API 연결
+    const newProduct = {
+      ...data,
+      defaultPrice: Number(data.defaultPrice),
+    };
+    mutate(newProduct);
     onClose();
   };
 
