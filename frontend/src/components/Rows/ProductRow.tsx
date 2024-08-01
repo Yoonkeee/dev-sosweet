@@ -1,5 +1,6 @@
-import { Button, HStack, Text } from '@chakra-ui/react';
+import { Button, HStack, Text, useDisclosure } from '@chakra-ui/react';
 import type { ProductWithSalesRecord } from 'src/types/dto';
+import { ModifyProduct } from '../../modals/ModifyProduct';
 import { ProductImage } from '../NameWithProfileImage/ProductImage';
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
 
 const ProductRow = ({ productInfo }: Props) => {
   const { defaultPrice, itemsReceivedCount, name, productImage } = productInfo;
+  const { isOpen: modifyIsOpen, onClose: modifyOnClose, onOpen: modifyOnOpen } = useDisclosure();
 
   const formattedPrice = String(defaultPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -15,12 +17,7 @@ const ProductRow = ({ productInfo }: Props) => {
     <HStack h="100%" justifyContent="space-between" w="100%">
       <HStack h="100%" w="50%">
         <ProductImage path={productImage} w="auto" />
-        <Text
-          cursor="pointer"
-          onClick={() => {
-            // TODO: 상품 정보 모달 열기 로직 연결
-          }}
-        >
+        <Text cursor="pointer" onClick={() => modifyOnOpen()}>
           {name} ({formattedPrice})
         </Text>
       </HStack>
@@ -39,7 +36,6 @@ const ProductRow = ({ productInfo }: Props) => {
           }}
           colorScheme="twitter"
           onClick={() => {
-            console.log('입고');
             // TODO: 입고 등록 모달 열기 로직 연결
           }}
           rounded="xl"
@@ -47,6 +43,7 @@ const ProductRow = ({ productInfo }: Props) => {
           입고
         </Button>
       </HStack>
+      {modifyIsOpen && <ModifyProduct isOpen onClose={modifyOnClose} />}
     </HStack>
   );
 };
