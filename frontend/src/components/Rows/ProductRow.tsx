@@ -9,7 +9,7 @@ type Props = {
 
 const ProductRow = ({ productInfo }: Props) => {
   const { defaultPrice, itemsReceivedCount, name, productImage } = productInfo;
-  const { isOpen: modifyIsOpen, onClose: modifyOnClose, onOpen: modifyOnOpen } = useDisclosure();
+  const { isOpen: isModifyOpen, onClose: onModifyClose, onOpen: onModifyOpen } = useDisclosure();
 
   const formattedPrice = String(defaultPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -17,7 +17,7 @@ const ProductRow = ({ productInfo }: Props) => {
     <HStack h="100%" justifyContent="space-between" w="100%">
       <HStack h="100%" w="50%">
         <ProductImage path={productImage} w="auto" />
-        <Text cursor="pointer" onClick={() => modifyOnOpen()}>
+        <Text cursor="pointer" onClick={() => onModifyOpen()}>
           {name} ({formattedPrice})
         </Text>
       </HStack>
@@ -43,7 +43,7 @@ const ProductRow = ({ productInfo }: Props) => {
           입고
         </Button>
       </HStack>
-      {modifyIsOpen && <ModifyProduct isOpen onClose={modifyOnClose} />}
+      {isModifyOpen && <ModifyProduct isOpen onClose={onModifyClose} />}
     </HStack>
   );
 };
