@@ -13,6 +13,7 @@ import {
   Select,
   Switch,
   Text,
+  Tooltip,
   VStack,
 } from '@chakra-ui/react';
 import { some } from 'lodash';
@@ -55,6 +56,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
 
   const onSubmit: SubmitHandler<FormValue> = data => {
     // TODO: Issue-20 상품 수정 API 연동 예정
+    onClose();
   };
 
   return (
@@ -106,18 +108,31 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
             </HStack>
             <HStack w="100%">
               <Text minW="20%">상품명</Text>
-              <Input
-                placeholder="상품명(필수)"
-                variant="filled"
-                {...register('name', {
-                  required: true,
-                  validate: value =>
-                    !some(productNameList, name => name === value) || '이미 존재하는 상품명이에요 🫢',
-                })}
-                style={{
-                  border: errors.name ? '2px solid red' : '',
-                }}
-              />
+              <Tooltip
+                label={errors.name ? errors.name.message : ''}
+                isOpen={!!errors.name}
+                bg="#ff5050"
+                color="white"
+                padding="8px"
+                placement="bottom-start"
+              >
+                <Input
+                  placeholder="상품명(필수)"
+                  variant="filled"
+                  {...register('name', {
+                    required: true,
+                    validate: value => {
+                      if (productInfo.name === value) return true;
+                      return (
+                        !some(productNameList, name => name === value) || '이미 존재하는 상품명이에요 🫢'
+                      );
+                    },
+                  })}
+                  style={{
+                    border: errors.name ? '2px solid red' : '',
+                  }}
+                />
+              </Tooltip>
             </HStack>
             <HStack w="100%">
               <Text minW="20%">판매가</Text>
