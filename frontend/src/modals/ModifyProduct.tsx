@@ -25,7 +25,7 @@ import { productNameListState } from '../store/product';
 type FormValue = {
   category: Category;
   name: string;
-  defaultPrice: string;
+  defaultPrice: number;
   isValidDate: boolean;
   totalRevenue: number;
   totalQuantitySold: number;
@@ -49,7 +49,6 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   } = useForm<FormValue>({
     defaultValues: {
       ...productInfo,
-      defaultPrice: String(productInfo.defaultPrice),
     },
     mode: 'onChange',
   });
