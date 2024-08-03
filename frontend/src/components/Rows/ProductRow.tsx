@@ -43,7 +43,7 @@ const ProductRow = ({ productInfo }: Props) => {
           입고
         </Button>
       </HStack>
-      {isModifyOpen && <ModifyProduct isOpen onClose={onModifyClose} />}
+      {isModifyOpen && <ModifyProduct isOpen onClose={onModifyClose} productInfo={productInfo} />}
     </HStack>
   );
 };

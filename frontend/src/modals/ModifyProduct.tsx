@@ -18,27 +18,28 @@ import {
 import { some } from 'lodash';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
-import type { Category } from 'src/types/dto';
+import type { Category, ProductWithSalesRecord } from 'src/types/dto';
 import { CATEGORIES } from '../modals/consts';
 import { productNameListState } from '../store/product';
 
 type FormValue = {
   category: Category;
   name: string;
-  defaultPrice: string;
+  defaultPrice: number;
   isValidDate: boolean;
   totalRevenue: number;
   totalQuantitySold: number;
-  productImage?: string;
-  vendor?: string;
+  productImage: string | null;
+  vendor: string | null;
 };
 
 type Props = {
   isOpen: boolean;
   onClose: VoidFunction;
+  productInfo: ProductWithSalesRecord;
 };
 
-export const ModifyProduct = ({ isOpen, onClose }: Props) => {
+export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   const productNameList = useRecoilValue(productNameListState);
 
   const {
@@ -46,6 +47,9 @@ export const ModifyProduct = ({ isOpen, onClose }: Props) => {
     handleSubmit,
     register,
   } = useForm<FormValue>({
+    defaultValues: {
+      ...productInfo,
+    },
     mode: 'onChange',
   });
 
