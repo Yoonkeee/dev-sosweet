@@ -46,7 +46,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   const productNameList = useRecoilValue(productNameListState);
 
   const {
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid, isSubmitting, isDirty },
     handleSubmit,
     register,
   } = useForm<FormValues>({
@@ -200,7 +200,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
                   color="white"
                   rounded="xl"
                   type="submit"
-                  isDisabled={!isValid || isSubmitting}
+                  isDisabled={!isValid || isSubmitting || !isDirty}
                 >
                   저장~
                 </Button>
