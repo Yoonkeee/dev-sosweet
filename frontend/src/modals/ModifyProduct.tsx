@@ -13,16 +13,19 @@ import {
   Select,
   Switch,
   Text,
+  Tooltip,
   VStack,
 } from '@chakra-ui/react';
-import { some } from 'lodash';
+import { isEqual, some } from 'lodash';
+import { useCallback } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import type { Category, ProductWithSalesRecord } from 'src/types/dto';
 import { CATEGORIES } from '../modals/consts';
 import { productNameListState } from '../store/product';
 
-type FormValue = {
+// JSON Array
+type FormValues = {
   category: Category;
   name: string;
   defaultPrice: number;
@@ -43,19 +46,28 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   const productNameList = useRecoilValue(productNameListState);
 
   const {
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting, isDirty },
     handleSubmit,
     register,
-  } = useForm<FormValue>({
+  } = useForm<FormValues>({
     defaultValues: {
       ...productInfo,
     },
     mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<FormValue> = data => {
-    // TODO: Issue-20 상품 수정 API 연동 예정
+  const onSubmit: SubmitHandler<FormValues> = data => {
+    if (!isEqual(productInfo, data)) {
+      // 값이 초기값과 같지 않을때만 API 요청
+      // TODO: Issue-20 상품 수정 API 연동 예정
+    }
+    onClose();
   };
+
+  const isDuplicateName = useCallback((value: string) => {
+    if (productInfo.name === value) return true;
+    return !some(productNameList, name => name === value);
+  }, []);
 
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
@@ -90,7 +102,9 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
                 id="category"
                 w="40%"
                 placeholder="카테고리(필수)"
-                {...register('category', { required: true })}
+                {...register('category', {
+                  required: true,
+                })}
                 style={{
                   border: errors.category ? '2px solid red' : '',
                 }}
@@ -106,18 +120,26 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
             </HStack>
             <HStack w="100%">
               <Text minW="20%">상품명</Text>
-              <Input
-                placeholder="상품명(필수)"
-                variant="filled"
-                {...register('name', {
-                  required: true,
-                  validate: value =>
-                    !some(productNameList, name => name === value) || '이미 존재하는 상품명이에요 🫢',
-                })}
-                style={{
-                  border: errors.name ? '2px solid red' : '',
-                }}
-              />
+              <Tooltip
+                label={errors.name ? errors.name.message : ''}
+                isOpen={!!errors.name}
+                bg="#ff5050"
+                color="white"
+                padding="8px"
+                placement="bottom-start"
+              >
+                <Input
+                  placeholder="상품명(필수)"
+                  variant="filled"
+                  {...register('name', {
+                    required: true,
+                    validate: value => isDuplicateName(value) || '이미 존재하는 상품명이에요 🫢',
+                  })}
+                  style={{
+                    border: errors.name ? '2px solid red' : '',
+                  }}
+                />
+              </Tooltip>
             </HStack>
             <HStack w="100%">
               <Text minW="20%">판매가</Text>
@@ -175,12 +197,13 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
                     color: 'white',
                     bg: '#526491',
                     rounded: 'xl',
-                    transform: 'scale(1.2)',
+                    ...(isValid && { transform: 'scale(1.2)' }),
                   }}
                   bg="#1a2a52"
                   color="white"
                   rounded="xl"
                   type="submit"
+                  isDisabled={!isValid || isSubmitting || !isDirty}
                 >
                   저장~
                 </Button>
