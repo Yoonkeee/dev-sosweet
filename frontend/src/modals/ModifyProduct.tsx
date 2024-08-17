@@ -16,7 +16,7 @@ import {
   Tooltip,
   VStack,
 } from '@chakra-ui/react';
-import { isEqual, some } from 'lodash';
+import { some } from 'lodash';
 import { useCallback } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
@@ -57,10 +57,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = data => {
-    if (!isEqual(productInfo, data)) {
-      // 값이 초기값과 같지 않을때만 API 요청
-      // TODO: Issue-20 상품 수정 API 연동 예정
-    }
+    // TODO: Issue-20 상품 수정 API 연동 예정
     onClose();
   };
 
@@ -149,6 +146,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
                 variant="filled"
                 {...register('defaultPrice', {
                   required: true,
+                  valueAsNumber: true,
                 })}
                 style={{
                   border: errors.defaultPrice ? '2px solid red' : '',
