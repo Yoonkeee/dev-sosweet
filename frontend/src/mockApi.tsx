@@ -1,4 +1,5 @@
-import axios from 'axios';
+import type { MutateFunction } from '@tanstack/react-query';
+import axios, { type AxiosResponse } from 'axios';
 import type { ProductWithoutSalesRecord, ProductWithSalesRecord } from 'src/types/dto';
 
 const mockBaseUrl = '/mocks';
@@ -11,3 +12,9 @@ export const getProductList = async () =>
 
 export const addNewProduct = (newProduct: Omit<ProductWithoutSalesRecord, 'id' | 'itemsReceivedCount'>) =>
   mockInstance.post('/post/add-new-product', newProduct);
+
+export const modProduct: MutateFunction<
+  AxiosResponse<ProductWithoutSalesRecord>,
+  Error,
+  { newProduct: Omit<ProductWithoutSalesRecord, 'itemsReceivedCount'> }
+> = ({ newProduct }) => mockInstance.post(`/post/mod-product/${newProduct.id}`, newProduct);
