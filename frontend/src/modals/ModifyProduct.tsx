@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  Heading,
   HStack,
   Input,
   Modal,
@@ -10,6 +11,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
+  Portal,
   Select,
   Switch,
   Text,
@@ -19,7 +27,7 @@ import {
 } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { some } from 'lodash';
-import { useCallback } from 'react';
+import { useCallback, useRef, type MutableRefObject } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import type { Category, ProductWithSalesRecord } from 'src/types/dto';
@@ -27,7 +35,6 @@ import { modProduct } from '../mockApi';
 import { CATEGORIES } from '../modals/consts';
 import { productNameListState } from '../store/product';
 
-// JSON Array
 type FormValues = {
   category: Category;
   name: string;
@@ -48,6 +55,7 @@ type Props = {
 export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   const productNameList = useRecoilValue(productNameListState);
   const toast = useToast();
+  const ref = useRef<HTMLElement | null>(null);
 
   const { mutate: updateMutate } = useMutation({
     mutationFn: modProduct,
@@ -88,10 +96,14 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
     return !some(productNameList, name => name === value);
   }, []);
 
+  const handleDelete = () => {
+    // TODO: 삭제 API 연동
+  };
+
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent m="3%">
+      <ModalContent m="3%" ref={ref}>
         <ModalHeader>상품 정보 ✏️</ModalHeader>
         <ModalCloseButton />
         <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
@@ -188,6 +200,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
             </HStack>
           </VStack>
           <ModalFooter mx={0} px={0}>
+            <DeleteProductButton modalRef={ref} onDelete={handleDelete} />
             <Flex
               css={{ WebkitMarginStart: 0 }}
               justifyContent="flex-end"
@@ -233,5 +246,46 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
         </ModalBody>
       </ModalContent>
     </Modal>
+  );
+};
+
+const DeleteProductButton = ({
+  modalRef,
+  onDelete,
+}: {
+  modalRef: MutableRefObject<HTMLElement | null>;
+  onDelete: VoidFunction;
+}) => {
+  return (
+    <Popover placement="top-start">
+      <PopoverTrigger>
+        <Button
+          _hover={{
+            textDecoration: 'none',
+            rounded: 'xl',
+            transform: 'scale(1.2)',
+          }}
+          color="#f8f8f8"
+          colorScheme="yellow"
+          rounded="xl"
+        >
+          삭제
+        </Button>
+      </PopoverTrigger>
+      <Portal containerRef={modalRef}>
+        <PopoverContent bg="gray.200" w="100%">
+          <PopoverArrow />
+          <PopoverCloseButton />
+          <PopoverBody>
+            <Heading fontSize="2xl" my="3vh">
+              상품을 삭제할까요?
+            </Heading>
+            <Button colorScheme="yellow" onClick={onDelete}>
+              삭제할게요!
+            </Button>
+          </PopoverBody>
+        </PopoverContent>
+      </Portal>
+    </Popover>
   );
 };
