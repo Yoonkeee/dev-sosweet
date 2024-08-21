@@ -14,13 +14,16 @@ import {
   Switch,
   Text,
   Tooltip,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
 import { some } from 'lodash';
 import { useCallback } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import type { Category, ProductWithSalesRecord } from 'src/types/dto';
+import { modProduct } from '../mockApi';
 import { CATEGORIES } from '../modals/consts';
 import { productNameListState } from '../store/product';
 
@@ -44,6 +47,21 @@ type Props = {
 
 export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   const productNameList = useRecoilValue(productNameListState);
+  const toast = useToast();
+
+  const { mutate: updateMutate } = useMutation({
+    mutationFn: modProduct,
+    onSuccess: result => {
+      toast({
+        title: '상품 수정에 성공했어요 ✏️',
+        status: 'success',
+        position: 'top',
+        duration: 1000,
+        isClosable: true,
+      });
+      onClose();
+    },
+  });
 
   const {
     formState: { errors, isValid, isSubmitting, isDirty },
@@ -57,7 +75,11 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = data => {
-    // TODO: Issue-20 상품 수정 API 연동 예정
+    const newProduct = {
+      ...data,
+      id: productInfo.id,
+    };
+    updateMutate({ newProduct });
     onClose();
   };
 
