@@ -19,7 +19,7 @@ export const modProduct: MutateFunction<
   { newProduct: Omit<ProductWithoutSalesRecord, 'itemsReceivedCount'> }
 > = ({ newProduct }) => mockInstance.post(`/post/mod-product/${newProduct.id}`, newProduct);
 
-export const cancelProduct: MutateFunction<
+export const deleteProduct: MutateFunction<
   {
     message: string;
   },

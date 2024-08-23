@@ -31,7 +31,7 @@ import { useCallback, useRef, type MutableRefObject } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import type { Category, ProductWithSalesRecord } from 'src/types/dto';
-import { cancelProduct, modProduct } from '../mockApi';
+import { deleteProduct, modProduct } from '../mockApi';
 import { CATEGORIES } from '../modals/consts';
 import { productNameListState } from '../store/product';
 
@@ -72,7 +72,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   });
 
   const { mutate: deleteMutate } = useMutation({
-    mutationFn: cancelProduct,
+    mutationFn: deleteProduct,
     onSuccess: () => {
       toast({
         title: '상품 삭제에 성공했어요 ✏️',
