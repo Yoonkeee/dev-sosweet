@@ -11,13 +11,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
-  Portal,
   Select,
   Switch,
   Text,
@@ -27,10 +20,12 @@ import {
 } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { some } from 'lodash';
-import { useCallback, useRef, type MutableRefObject } from 'react';
+import { useCallback, useRef } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import type { Category, ProductWithSalesRecord } from 'src/types/dto';
+import PopoverContainer from '../components/Popover';
+import type { PopoverProps } from '../components/Popover/type';
 import { deleteProduct, modProduct } from '../mockApi';
 import { CATEGORIES } from '../modals/consts';
 import { productNameListState } from '../store/product';
@@ -222,7 +217,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
             </HStack>
           </VStack>
           <ModalFooter mx={0} px={0}>
-            <DeleteProductButton modalRef={ref} onDelete={handleDelete} />
+            <DeleteProductButton name="삭제" modalRef={ref} onDelete={handleDelete} />
             <Flex
               css={{ WebkitMarginStart: 0 }}
               justifyContent="flex-end"
@@ -271,43 +266,17 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   );
 };
 
-const DeleteProductButton = ({
-  modalRef,
-  onDelete,
-}: {
-  modalRef: MutableRefObject<HTMLElement | null>;
-  onDelete: VoidFunction;
-}) => {
+const DeleteProductButton = ({ name, modalRef, onDelete }: PopoverProps) => {
   return (
-    <Popover placement="top-start">
-      <PopoverTrigger>
-        <Button
-          _hover={{
-            textDecoration: 'none',
-            rounded: 'xl',
-            transform: 'scale(1.2)',
-          }}
-          color="#f8f8f8"
-          colorScheme="yellow"
-          rounded="xl"
-        >
-          삭제
+    <PopoverContainer name={name}>
+      <PopoverContainer.Content modalRef={modalRef}>
+        <Heading fontSize="2xl" my="3vh">
+          상품을 삭제할까요?
+        </Heading>
+        <Button colorScheme="yellow" onClick={onDelete}>
+          삭제할게요!
         </Button>
-      </PopoverTrigger>
-      <Portal containerRef={modalRef}>
-        <PopoverContent bg="gray.200" w="100%">
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverBody>
-            <Heading fontSize="2xl" my="3vh">
-              상품을 삭제할까요?
-            </Heading>
-            <Button colorScheme="yellow" onClick={onDelete}>
-              삭제할게요!
-            </Button>
-          </PopoverBody>
-        </PopoverContent>
-      </Portal>
-    </Popover>
+      </PopoverContainer.Content>
+    </PopoverContainer>
   );
 };
