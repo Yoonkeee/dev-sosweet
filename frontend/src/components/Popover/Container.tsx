@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import type { MutableRefObject, PropsWithChildren } from 'react';
 
-type TriggerProps = {
+type PopoverContainer = {
   name: string;
   bgColor?: string;
   fontColor?: string;
@@ -25,7 +25,7 @@ export const PopoverContainer = ({
   bgColor = 'yellow',
   fontColor = '#f8f8f8',
   children,
-}: TriggerProps) => {
+}: PopoverContainer) => {
   return (
     <Popover placement="top-start">
       <PopoverTrigger>
