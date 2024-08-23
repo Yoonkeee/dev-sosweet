@@ -83,6 +83,16 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
       });
       onClose();
     },
+    onError: () => {
+      toast({
+        title: '상품 삭제에 실패했어요 🥲',
+        status: 'error',
+        position: 'top',
+        duration: 1000,
+        isClosable: true,
+      });
+      onClose();
+    },
   });
 
   const {
