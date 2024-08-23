@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  Heading,
   HStack,
   Input,
   Modal,
@@ -19,15 +20,16 @@ import {
 } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { some } from 'lodash';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import type { Category, ProductWithSalesRecord } from 'src/types/dto';
-import { modProduct } from '../mockApi';
+import PopoverContainer from '../components/Popover';
+import type { PopoverProps } from '../components/Popover/type';
+import { deleteProduct, modProduct } from '../mockApi';
 import { CATEGORIES } from '../modals/consts';
 import { productNameListState } from '../store/product';
 
-// JSON Array
 type FormValues = {
   category: Category;
   name: string;
@@ -48,13 +50,38 @@ type Props = {
 export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
   const productNameList = useRecoilValue(productNameListState);
   const toast = useToast();
+  const ref = useRef<HTMLElement | null>(null);
 
   const { mutate: updateMutate } = useMutation({
     mutationFn: modProduct,
-    onSuccess: result => {
+    onSuccess: () => {
       toast({
         title: '상품 수정에 성공했어요 ✏️',
         status: 'success',
+        position: 'top',
+        duration: 1000,
+        isClosable: true,
+      });
+      onClose();
+    },
+  });
+
+  const { mutate: deleteMutate } = useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      toast({
+        title: '상품 삭제에 성공했어요 ✏️',
+        status: 'success',
+        position: 'top',
+        duration: 1000,
+        isClosable: true,
+      });
+      onClose();
+    },
+    onError: () => {
+      toast({
+        title: '상품 삭제에 실패했어요 🥲',
+        status: 'error',
         position: 'top',
         duration: 1000,
         isClosable: true,
@@ -88,10 +115,12 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
     return !some(productNameList, name => name === value);
   }, []);
 
+  const handleDelete = () => deleteMutate({ id: productInfo.id });
+
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent m="3%">
+      <ModalContent m="3%" ref={ref}>
         <ModalHeader>상품 정보 ✏️</ModalHeader>
         <ModalCloseButton />
         <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
@@ -188,6 +217,7 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
             </HStack>
           </VStack>
           <ModalFooter mx={0} px={0}>
+            <DeleteProductButton name="삭제" modalRef={ref} onDelete={handleDelete} />
             <Flex
               css={{ WebkitMarginStart: 0 }}
               justifyContent="flex-end"
@@ -233,5 +263,20 @@ export const ModifyProduct = ({ isOpen, onClose, productInfo }: Props) => {
         </ModalBody>
       </ModalContent>
     </Modal>
+  );
+};
+
+const DeleteProductButton = ({ name, modalRef, onDelete }: PopoverProps) => {
+  return (
+    <PopoverContainer name={name}>
+      <PopoverContainer.Content modalRef={modalRef}>
+        <Heading fontSize="2xl" my="3vh">
+          상품을 삭제할까요?
+        </Heading>
+        <Button colorScheme="yellow" onClick={onDelete}>
+          삭제할게요!
+        </Button>
+      </PopoverContainer.Content>
+    </PopoverContainer>
   );
 };
