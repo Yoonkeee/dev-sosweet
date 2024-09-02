@@ -60,7 +60,7 @@ export const Home = () => (
       <HomeRectBoxTwoByOne
         bgColor="#ffa29a"
         image={프로8}
-        letterColor={mainColor}
+        letterColor="#FFFFDF"
         link="/product"
         title="상품관리"
       />
