@@ -58,6 +58,7 @@ export const Home = () => (
       {/*  LEFT  */}
 
       <HomeRectBoxTwoByOne
+        ml={50}
         bgColor="#ffa29a"
         image={프로8}
         letterColor="#FFFFDF"
@@ -114,7 +115,7 @@ const HomeRectBoxTwoByOne = props => (
   <AspectRatio border={`2px solid ${mainColor}`} maxW="250px" ratio={2} rounded="1rem" w="50%">
     <Link h="100%" to={props.link} w="100%">
       <Box bgColor={props.bgColor} h="100%" rounded="0.9rem" w="100%">
-        <Image rounded="0.9rem" src={props.image} />
+        <Image rounded="0.9rem" src={props.image} marginLeft={props.ml && props.ml} />
         <Text
           color={props.letterColor}
           fontSize="2xl"
