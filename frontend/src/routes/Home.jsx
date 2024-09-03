@@ -1,20 +1,7 @@
-import {
-  AspectRatio,
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Image,
-  Text,
-  useBreakpointValue,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
-import { Link, redirect } from 'react-router-dom';
-import { mainColor } from '../api';
-import ModifyDog from '../modals/ModifyDog';
-import 박프로 from '../../public/logo/park-pro.webp';
+import { AspectRatio, Box, Button, HStack, Image, Text, useDisclosure, VStack } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import 박하로 from '../../public/logo/haro.webp';
+import 박프로 from '../../public/logo/park-pro.webp';
 import 프로1 from '../../public/logo/pro1.png';
 import 프로2 from '../../public/logo/pro2.png';
 import 프로3 from '../../public/logo/pro3.png';
@@ -22,6 +9,8 @@ import 프로4 from '../../public/logo/pro4.png';
 import 프로5 from '../../public/logo/pro5.png';
 import 프로6 from '../../public/logo/pro6.png';
 import 프로8 from '../../public/logo/pro8.png';
+import { mainColor } from '../api';
+import ModifyDog from '../modals/ModifyDog';
 
 export const Home = () => (
   <VStack bgColor="gray.200" minH="80vh" paddingTop="2.5vh" pb={0} pt="2vh" px="2%" w="100%">
@@ -48,12 +37,12 @@ export const Home = () => (
     {/*  ROW 3  */}
     <HStack alignContent="center" alignItems="center" justifyContent="center" px="2%" w="100%">
       {/*  LEFT  */}
-      <HomeRectBoxTwoByOne
-        bgColor="#ffa29a"
-        image={프로8}
-        letterColor={mainColor}
-        link="/albums"
-        title="앨범"
+      <HomeRectBoxTwoByOneModal
+        bgColor="#FFF6BD"
+        component={ModifyDog}
+        image={프로6}
+        letterColor="#4B437D"
+        title="🐶 수정"
       />
       {/*  RIGHT  */}
       <HomeRectBoxTwoByOne
@@ -67,12 +56,14 @@ export const Home = () => (
     {/*  ROW 4  */}
     <HStack alignContent="center" alignItems="center" justifyContent="center" px="2%" w="100%">
       {/*  LEFT  */}
-      <HomeRectBoxTwoByOneModal
-        bgColor="#FFF6BD"
-        component={ModifyDog}
-        image={프로6}
-        letterColor="#4B437D"
-        title="🐶 수정"
+
+      <HomeRectBoxTwoByOne
+        ml={50}
+        bgColor="#ffa29a"
+        image={프로8}
+        letterColor="#FFFFDF"
+        link="/product"
+        title="상품관리"
       />
       {/*  RIGHT  */}
       <HomeRectBoxTwoByOne
@@ -124,7 +115,7 @@ const HomeRectBoxTwoByOne = props => (
   <AspectRatio border={`2px solid ${mainColor}`} maxW="250px" ratio={2} rounded="1rem" w="50%">
     <Link h="100%" to={props.link} w="100%">
       <Box bgColor={props.bgColor} h="100%" rounded="0.9rem" w="100%">
-        <Image rounded="0.9rem" src={props.image} />
+        <Image rounded="0.9rem" src={props.image} marginLeft={props.ml && props.ml} />
         <Text
           color={props.letterColor}
           fontSize="2xl"
